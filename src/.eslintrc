@@ -1,0 +1,10 @@
+{
+    "env": {
+        "node": false,
+        "browser": true
+    },
+    "globals": {
+        "React": false,
+        "ReactDOM": false
+    }
+}

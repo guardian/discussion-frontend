@@ -1,3 +1,4 @@
+import './react-global';
 import CommentLoader from '../src/index';
 
 CommentLoader({

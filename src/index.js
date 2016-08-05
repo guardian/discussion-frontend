@@ -2,5 +2,8 @@ export default function create ({
     discussionId,
     element
 }) {
-    console.log(discussionId, element);
+    ReactDOM.render(
+        <span>Discussion {discussionId}</span>,
+        element
+    );
 }
