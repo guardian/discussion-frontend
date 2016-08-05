@@ -1,0 +1,26 @@
+{
+  "name": "guardian-discussion-frontend",
+  "description": "Standalone UI for Guardian comments",
+  "version": "1.0.0",
+  "license": "Apache-2.0",
+  "repository": "https://github.com/guardian/discussion-frontend",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "clean": "rm -rf tmp && mkdir -p tmp && rm -rf dist",
+    "lint": "eslint src test",
+    "example": "node example/server.js",
+    "pretest": "npm run clean",
+    "posttest": "npm run lint",
+    "prepublish": "npm test",
+    "start": "npm run example"
+  },
+  "devDependencies": {
+    "babel-preset-es2015-rollup": "^1.1.1",
+    "eslint": "^3.2.2",
+    "express": "^4.14.0",
+    "rollup": "^0.34.3",
+    "rollup-plugin-babel": "^2.6.1"
+  }
+}
