@@ -34,6 +34,17 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
+app.get('/comments-count.json', (req, res) => {
+    res.send({
+        counts: req.query.shortUrls.split(',').map(id => {
+            return {
+                id,
+                count: Math.floor(Math.random() * 5000)
+            };
+        })
+    });
+});
+
 var port = process.env.PORT || 4000;
 app.listen(port, () => {
     // eslint-disable-next-line no-console
