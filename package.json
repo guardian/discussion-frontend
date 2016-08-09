@@ -4,16 +4,18 @@
   "version": "1.0.0",
   "license": "Apache-2.0",
   "repository": "https://github.com/guardian/discussion-frontend",
+  "main": "dist/discussion-frontend.standalone.amd.js",
   "files": [
     "dist"
   ],
   "scripts": {
     "clean": "rm -rf tmp && mkdir -p tmp && rm -rf dist",
+    "compile": "rollup -c rollup.config.amd.js && rollup -c rollup.config.standalone.amd.js",
     "lint": "eslint src test",
     "example": "node example/server.js",
     "pretest": "npm run clean",
     "posttest": "npm run lint",
-    "prepublish": "npm test",
+    "prepublish": "npm test && npm run compile",
     "start": "npm run example"
   },
   "devDependencies": {
@@ -27,6 +29,7 @@
     "rollup": "^0.34.3",
     "rollup-plugin-babel": "^2.6.1",
     "rollup-plugin-commonjs": "^3.3.1",
+    "rollup-plugin-inject": "^1.4.1",
     "rollup-plugin-node-resolve": "^2.0.0",
     "rollup-plugin-replace": "^1.1.1"
   },

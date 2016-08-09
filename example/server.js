@@ -3,6 +3,7 @@ const path = require('path');
 const rollupOpts = require('../rollup.base.config');
 const rollup = require('rollup');
 const replace = require('rollup-plugin-replace');
+const inject = require('rollup-plugin-inject');
 
 const app = express();
 
@@ -14,6 +15,12 @@ app.use((req, res, next) => {
             plugins: rollupOpts.plugins.concat([
                 replace({
                     'process.env.NODE_ENV': '\'dev\''
+                }),
+                inject({
+                    modules: {
+                        React: 'react',
+                        ReactDOM: 'react-dom'
+                    }
                 })
             ]),
             treeshake: false
