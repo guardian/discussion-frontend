@@ -3,6 +3,7 @@ const commonjs = require('rollup-plugin-commonjs');
 const nodeResolve = require('rollup-plugin-node-resolve');
 const replace = require('rollup-plugin-replace');
 const inject = require('rollup-plugin-inject');
+const path = require('path');
 
 const basePlugins = exports.basePlugins = [
     nodeResolve({
@@ -14,6 +15,11 @@ const basePlugins = exports.basePlugins = [
 ];
 
 exports.productionPlugins = basePlugins.concat([
+    replace({
+        'process.env.NODE_ENV': '\'production\'',
+        'process.env': 'false',
+        'typeof process': '\'undefined\''
+    }),
     babel({
         exclude: ['node_modules/**'],
         plugins: ['transform-react-remove-prop-types']
@@ -21,8 +27,10 @@ exports.productionPlugins = basePlugins.concat([
 ]);
 
 exports.devPlugins = basePlugins.concat([
-    replace({
-        'process.env.NODE_ENV': '\'dev\''
+    inject({
+        modules: {
+            process: path.join(__dirname, 'example/lib/process.js')
+        }
     }),
     babel({
         exclude: ['node_modules/**']
