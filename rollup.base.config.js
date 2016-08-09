@@ -26,11 +26,14 @@ exports.devPlugins = basePlugins.concat([
     }),
     babel({
         exclude: ['node_modules/**']
-    }),
+    })
+]);
+
+exports.standalonePluginsExtra = [
     inject({
         modules: {
             React: 'react',
             ReactDOM: 'react-dom'
         }
     })
-]);
+];

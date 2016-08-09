@@ -1,31 +1,49 @@
 const express = require('express');
 const path = require('path');
 const plugins = require('../rollup.base.config').devPlugins;
+const inject = require('../rollup.base.config').standalonePluginsExtra;
 const rollup = require('rollup');
+const fs = require('fs');
 
 const app = express();
 
-app.use((req, res, next) => {
-    if (/\.js$/.test(req.path)) {
-        const fullpath = path.join(__dirname, req.path);
-        rollup.rollup({
-            entry: fullpath,
-            plugins: plugins
-        })
-        .then(bundle => bundle.generate({ format: 'iife' }))
-        .then(result => {
-            res.status(200)
-            .type('application/javascript')
-            .send(result.code);
-        })
-        .catch(next);
-    } else {
-        next();
-    }
-});
+function rollupMiddleware (base, format, forceInject) {
+    return function(req, res, next) {
+        if (/\.js$/.test(req.path)) {
+            const fullpath = path.join(base, req.path);
+            if (exists(fullpath)) {
+                rollup.rollup({
+                    entry: fullpath,
+                    plugins: /standalone/.test(req.path) || forceInject ? plugins.concat(inject) : plugins
+                })
+                .then(bundle => bundle.generate({ format: format }))
+                .then(result => {
+                    res.status(200)
+                    .type('application/javascript')
+                    .send(result.code);
+                })
+                .catch(next);
+            } else {
+                next();
+            }
+        } else {
+            next();
+        }
+    };
+}
+
+app.use(rollupMiddleware(__dirname, 'iife', true));
+app.use('/src', rollupMiddleware(path.join(__dirname, '../src'), 'amd', false));
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+app.get('/assets.json', (req, res) => {
+    res.send({
+        'discussion-frontend.amd': 'src/index',
+        'discussion-frontend.standalone.amd': 'src/standalone'
+    });
 });
 
 app.get('/comments-count.json', (req, res) => {
@@ -44,3 +62,11 @@ app.listen(port, () => {
     // eslint-disable-next-line no-console
     console.log('Example ready on http://localhost:' + port);
 });
+
+function exists (file) {
+    try {
+        return fs.statSync(file).isFile();
+    } catch (ex) {
+        return false;
+    }
+}

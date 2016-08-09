@@ -1,18 +1,11 @@
 const plugins = require('./rollup.base.config').productionPlugins;
-import inject from 'rollup-plugin-inject';
+const inject = require('./rollup.base.config').standalonePluginsExtra;
 
 const config = {
     entry: 'src/standalone.js',
     format: 'amd',
     dest: 'dist/discussion-frontend.standalone.amd.js',
-    plugins: plugins.concat([
-        inject({
-            modules: {
-                React: 'react',
-                ReactDOM: 'react-dom'
-            }
-        })
-    ])
+    plugins: plugins.concat(inject)
 };
 
 export default config;
