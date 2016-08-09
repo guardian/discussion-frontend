@@ -1,11 +1,11 @@
-const base = require('./rollup.base.config');
+const plugins = require('./rollup.base.config').productionPlugins;
 import inject from 'rollup-plugin-inject';
 
-const config = Object.assign(base, {
+const config = {
     entry: 'src/standalone.js',
     format: 'amd',
     dest: 'dist/discussion-frontend.standalone.amd.js',
-    plugins: base.plugins.concat([
+    plugins: plugins.concat([
         inject({
             modules: {
                 React: 'react',
@@ -13,6 +13,6 @@ const config = Object.assign(base, {
             }
         })
     ])
-});
+};
 
 export default config;

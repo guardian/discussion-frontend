@@ -1,9 +1,7 @@
 const express = require('express');
 const path = require('path');
-const rollupOpts = require('../rollup.base.config');
+const plugins = require('../rollup.base.config').devPlugins;
 const rollup = require('rollup');
-const replace = require('rollup-plugin-replace');
-const inject = require('rollup-plugin-inject');
 
 const app = express();
 
@@ -12,18 +10,7 @@ app.use((req, res, next) => {
         const fullpath = path.join(__dirname, req.path);
         rollup.rollup({
             entry: fullpath,
-            plugins: rollupOpts.plugins.concat([
-                replace({
-                    'process.env.NODE_ENV': '\'dev\''
-                }),
-                inject({
-                    modules: {
-                        React: 'react',
-                        ReactDOM: 'react-dom'
-                    }
-                })
-            ]),
-            treeshake: false
+            plugins: plugins
         })
         .then(bundle => bundle.generate({ format: 'iife' }))
         .then(result => {

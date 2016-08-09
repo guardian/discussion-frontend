@@ -1,9 +1,10 @@
-const base = require('./rollup.base.config');
+const plugins = require('./rollup.base.config').productionPlugins;
 
-const config = Object.assign(base, {
-    entry: 'src/standalone.js',
+const config = {
+    entry: 'src/index.js',
     format: 'amd',
-    dest: 'dist/discussion-frontend.amd.js'
-});
+    dest: 'dist/discussion-frontend.amd.js',
+    plugins: plugins
+};
 
 export default config;
