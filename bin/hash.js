@@ -3,13 +3,12 @@
 const crypto = require('crypto');
 const path = require('path');
 const fs = require('fs');
-const junk = require('junk');
 const mkdirp = require('mkdirp');
-const isFile = require('is-file');
 const uglify = require('uglify-js');
+const listFiles = require('./lib/list');
 
-const SOURCE_PATH = path.join(__dirname, 'dist');
-const DESTINATION_PATH = path.join(__dirname, 'dist/hashed');
+const SOURCE_PATH = path.join(__dirname, '../dist');
+const DESTINATION_PATH = path.join(__dirname, '../dist/hashed');
 
 prepareWorkingPath(DESTINATION_PATH);
 const fileMap = listFiles(SOURCE_PATH)
@@ -55,13 +54,6 @@ function rename (filename, destination, modifier) {
     const ext = path.extname(filename);
     const basename = path.basename(filename, ext);
     return path.join(destination, modifier(basename, ext));
-}
-
-function listFiles (basePath) {
-    return fs.readdirSync(basePath)
-    .filter(junk.not)
-    .map(file => path.join(basePath, file))
-    .filter(isFile.sync);
 }
 
 function appendRevision (revision) {
