@@ -46,9 +46,9 @@ app.get('/assets.json', (req, res) => {
     });
 });
 
-app.get('/comments-count.json', (req, res) => {
+app.get('/getCommentCounts', (req, res) => {
     res.send({
-        counts: req.query.shortUrls.split(',').map(id => {
+        counts: req.query['short-urls'].split(',').map(id => {
             return {
                 id,
                 count: Math.floor(Math.random() * 5000)
