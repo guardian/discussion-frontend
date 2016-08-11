@@ -7,7 +7,7 @@ const path = require('path');
 
 const basePlugins = exports.basePlugins = [
     nodeResolve({
-        jsnext: true,
+        jsnext: false,
         main: true,
         preferBuiltins: true
     }),
@@ -37,11 +37,20 @@ exports.devPlugins = basePlugins.concat([
     })
 ]);
 
-exports.standalonePluginsExtra = [
+exports.standalonePluginsExtraReact = [
     inject({
         modules: {
             React: 'react',
             ReactDOM: 'react-dom'
+        }
+    })
+];
+
+exports.standalonePluginsExtraPreact = [
+    inject({
+        modules: {
+            React: 'preact-compat',
+            ReactDOM: 'preact-compat'
         }
     })
 ];

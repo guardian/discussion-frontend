@@ -1,4 +1,5 @@
 import CommentCount from '../ui/comment-count';
+import mediator from '../utils/mediator';
 
 class Discussion extends React.Component {
     constructor (props) {
@@ -12,7 +13,9 @@ class Discussion extends React.Component {
     componentDidMount () {
         this.api.commentCount(this.props.id)
         .then(counts => {
-            this.setState({ commentsCount: counts[this.props.id] });
+            this.setState({ commentsCount: counts[this.props.id] }, () => {
+                mediator.emit('comment-count', counts);
+            });
         });
     }
 

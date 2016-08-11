@@ -1,7 +1,8 @@
 const express = require('express');
 const path = require('path');
 const plugins = require('../rollup.base.config').devPlugins;
-const inject = require('../rollup.base.config').standalonePluginsExtra;
+const injectReact = require('../rollup.base.config').standalonePluginsExtraReact;
+const injectPreact = require('../rollup.base.config').standalonePluginsExtraPreact;
 const rollup = require('rollup');
 const fs = require('fs');
 
@@ -11,6 +12,7 @@ function rollupMiddleware (base, format, forceInject) {
     return function(req, res, next) {
         if (/\.js$/.test(req.path)) {
             const fullpath = path.join(base, req.path);
+            const inject = req.query.framework === 'preact' ? injectPreact : injectReact;
             if (exists(fullpath)) {
                 rollup.rollup({
                     entry: fullpath,
