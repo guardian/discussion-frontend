@@ -11,8 +11,8 @@ class Discussion extends React.Component {
 
     componentDidMount () {
         this.api.commentCount(this.props.id)
-        .then(count => {
-            this.setState({ commentsCount: count });
+        .then(counts => {
+            this.setState({ commentsCount: counts[this.props.id] });
         });
     }
 

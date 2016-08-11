@@ -47,14 +47,9 @@ app.get('/assets.json', (req, res) => {
 });
 
 app.get('/getCommentCounts', (req, res) => {
-    res.send({
-        counts: req.query['short-urls'].split(',').map(id => {
-            return {
-                id,
-                count: Math.floor(Math.random() * 5000)
-            };
-        })
-    });
+    res.send(req.query['short-urls'].split(',').reduce((resp, id) => {
+        return Object.assign(resp, { [id]: Math.floor(Math.random() * 5000) });
+    }, {}));
 });
 
 var port = process.env.PORT || 4000;

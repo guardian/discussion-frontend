@@ -9,13 +9,8 @@ export function create ({
         const url = join(apiHost, 'getCommentCounts' + '?short-urls=' + ids.join(','));
         return get(url)
         .then(response => {
-            if (response.counts && response.counts.length > 0) {
-                const count = response.counts[0].count;
-                mediator.emit('comment-count', count);
-                return count;
-            } else {
-                return Promise.reject(new Error('Invalid comments count response'));
-            }
+            mediator.emit('comment-count', response);
+            return response;
         })
         .catch(ex => {
             mediator.emit('error', 'comments-count', ex);
