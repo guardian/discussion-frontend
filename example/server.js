@@ -43,8 +43,9 @@ app.get('/', (req, res) => {
 
 app.get('/assets.json', (req, res) => {
     res.send({
-        'discussion-frontend.amd': 'src/index',
-        'discussion-frontend.standalone.amd': 'src/standalone'
+        'discussion-frontend.amd': 'src/index.js',
+        'discussion-frontend.react.amd': 'src/standalone.js?framework=react',
+        'discussion-frontend.preact.amd': 'src/standalone.js?framework=preact',
     });
 });
 

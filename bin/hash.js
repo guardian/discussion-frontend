@@ -34,7 +34,7 @@ function writeRewritten (fullPath, destinationPath) {
     fs.writeFileSync(renamedPath, minified.code);
     fs.writeFileSync(path.join(destinationPath, renamedFile + '.map'), minified.map);
     return {
-        [path.basename(fullPath, ext)]: renamedFile
+        [path.basename(fullPath, ext)]: renamedFile + ext
     };
 }
 
