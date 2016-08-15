@@ -1,56 +1,101 @@
+const path = require('path');
 const babel = require('rollup-plugin-babel');
 const commonjs = require('rollup-plugin-commonjs');
 const nodeResolve = require('rollup-plugin-node-resolve');
 const replace = require('rollup-plugin-replace');
 const inject = require('rollup-plugin-inject');
-const path = require('path');
+const alias = require('rollup-plugin-alias');
 
-const basePlugins = exports.basePlugins = [
+const base = [
     nodeResolve({
         jsnext: false,
         main: true,
         preferBuiltins: true
     }),
-    commonjs()
+    commonjs({
+        namedExports: {
+            'node_modules/react/lib/ReactDOM.js': ['render'],
+            'preact-compat': ['render'],
+            'preact': ['render']
+        }
+    })
 ];
 
-exports.productionPlugins = basePlugins.concat([
+const aliasesReact = [
+    alias({
+        'react-dom': path.join(__dirname, 'node_modules/react/lib/ReactDOM.js')
+    })
+];
+
+const aliasesPreact = [
+    alias({
+        'react-dom': require.resolve('preact-compat')
+    })
+];
+
+const production = [
     replace({
         'process.env.NODE_ENV': '\'production\'',
-        'process.env': 'false',
         'typeof process': '\'undefined\''
     }),
     babel({
+        comments: false,
         exclude: ['node_modules/**'],
         plugins: ['transform-react-remove-prop-types']
     })
-]);
+];
 
-exports.devPlugins = basePlugins.concat([
-    inject({
-        modules: {
-            process: path.join(__dirname, 'example/lib/process.js')
-        }
+const development = [
+    replace({
+        'process.env.NODE_ENV': '\'development\''
     }),
     babel({
         exclude: ['node_modules/**']
     })
-]);
+];
 
-exports.standalonePluginsExtraReact = [
+const injectReact = [
     inject({
+        exclude: ['node_modules/**'],
         modules: {
-            React: 'react',
-            ReactDOM: 'react-dom'
+            React: 'react'
         }
     })
 ];
 
-exports.standalonePluginsExtraPreact = [
+const injectPreact = [
     inject({
+        exclude: ['node_modules/**'],
         modules: {
-            React: 'preact-compat',
-            ReactDOM: 'preact-compat'
+            React: 'preact-compat'
         }
     })
+];
+
+exports.standaloneReactProduction = [
+    ...aliasesReact,
+    ...production,
+    ...base,
+    ...injectReact
+];
+
+exports.standaloneReactDevelopment = [
+    ...aliasesReact,
+    ...development,
+    ...base,
+    ...injectReact
+];
+
+exports.standalonePreactProduction = [
+    ...aliasesPreact,
+    ...production,
+    ...base,
+    ...injectPreact
+];
+
+exports.standalonePreactDevelopment = [
+    ...aliasesPreact,
+    ...development,
+    ...base,
+    ...injectPreact
 ];

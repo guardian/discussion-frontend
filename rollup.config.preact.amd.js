@@ -1,11 +1,10 @@
-const plugins = require('./rollup.base.config').productionPlugins;
-const inject = require('./rollup.base.config').standalonePluginsExtraPreact;
+const plugins = require('./rollup.base.config').standalonePreactProduction;
 
 const config = {
-    entry: 'src/standalone.js',
+    entry: 'src/index.js',
     format: 'amd',
     dest: 'dist/discussion-frontend.preact.amd.js',
-    plugins: plugins.concat(inject)
+    plugins: plugins
 };
 
 export default config;

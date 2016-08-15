@@ -5,13 +5,12 @@
   "version": "1.0.0",
   "license": "Apache-2.0",
   "repository": "https://github.com/guardian/discussion-frontend",
-  "main": "dist/discussion-frontend.standalone.amd.js",
   "files": [
     "dist"
   ],
   "scripts": {
     "clean": "rm -rf tmp && mkdir -p tmp && rm -rf dist",
-    "compile": "rollup -c rollup.config.amd.js && rollup -c rollup.config.react.amd.js && rollup -c rollup.config.preact.amd.js",
+    "compile": "rollup -c rollup.config.react.amd.js && rollup -c rollup.config.preact.amd.js",
     "hash": "node bin/hash.js",
     "deploy": "node bin/riffraff.js",
     "lint": "eslint src test",
@@ -41,6 +40,7 @@
     "react": "^15.3.0",
     "react-dom": "^15.3.0",
     "rollup": "^0.34.7",
+    "rollup-plugin-alias": "^1.2.0",
     "rollup-plugin-babel": "^2.6.1",
     "rollup-plugin-commonjs": "^3.3.1",
     "rollup-plugin-inject": "^1.4.1",

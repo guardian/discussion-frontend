@@ -1,22 +1,22 @@
 const express = require('express');
 const path = require('path');
-const plugins = require('../rollup.base.config').devPlugins;
-const injectReact = require('../rollup.base.config').standalonePluginsExtraReact;
-const injectPreact = require('../rollup.base.config').standalonePluginsExtraPreact;
+const react = require('../rollup.base.config').standaloneReactDevelopment;
+const preact = require('../rollup.base.config').standalonePreactDevelopment;
 const rollup = require('rollup');
 const fs = require('fs');
 
 const app = express();
 
-function rollupMiddleware (base, format, forceInject) {
+function rollupMiddleware (base, format) {
     return function(req, res, next) {
         if (/\.js$/.test(req.path)) {
             const fullpath = path.join(base, req.path);
-            const inject = req.query.framework === 'preact' ? injectPreact : injectReact;
+            const plugins = req.query.framework === 'preact' ? preact : react;
+
             if (exists(fullpath)) {
                 rollup.rollup({
                     entry: fullpath,
-                    plugins: /standalone/.test(req.path) || forceInject ? plugins.concat(inject) : plugins
+                    plugins: plugins
                 })
                 .then(bundle => bundle.generate({ format: format }))
                 .then(result => {
@@ -34,8 +34,8 @@ function rollupMiddleware (base, format, forceInject) {
     };
 }
 
-app.use(rollupMiddleware(__dirname, 'iife', true));
-app.use('/src', rollupMiddleware(path.join(__dirname, '../src'), 'amd', false));
+app.use('/src', rollupMiddleware(path.join(__dirname, '../src'), 'amd'));
+app.use(rollupMiddleware(__dirname, 'iife'));
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
@@ -43,9 +43,8 @@ app.get('/', (req, res) => {
 
 app.get('/assets.json', (req, res) => {
     res.send({
-        'discussion-frontend.amd': 'src/index.js',
-        'discussion-frontend.react.amd': 'src/standalone.js?framework=react',
-        'discussion-frontend.preact.amd': 'src/standalone.js?framework=preact',
+        'discussion-frontend.react.amd': 'src/index.js?framework=react',
+        'discussion-frontend.preact.amd': 'src/index.js?framework=preact',
     });
 });
 
