@@ -1,13 +1,30 @@
+/* eslint-disable camelcase */
 const express = require('express');
-const path = require('path');
-const react = require('../rollup.base.config').standaloneReactDevelopment;
-const preact = require('../rollup.base.config').standalonePreactDevelopment;
-const rollup = require('rollup');
 const fs = require('fs');
+const path = require('path');
+const reactDev = require('../rollup.base.config').standaloneReactDevelopment;
+const preactDev = require('../rollup.base.config').standalonePreactDevelopment;
+const reactProd = require('../rollup.base.config').standaloneReactProduction;
+const preactProd = require('../rollup.base.config').standalonePreactProduction;
+const rollup = require('rollup');
+const uglify = require('uglify-js');
+const uglifyOpts = require('../uglify.options');
+const pkg = require('../package.json');
 
 const app = express();
 
-function rollupMiddleware (base, format) {
+function rollupMiddleware (base, format, production) {
+    const react = production ? reactProd : reactDev;
+    const preact = production ? preactProd : preactDev;
+    const compress = production ? (code, name) => {
+        return uglify.minify({
+            [name]: code
+        }, {
+            fromString: true,
+            compress: uglifyOpts
+        }).code;
+    } : (code) => code;
+
     return function(req, res, next) {
         if (/\.js$/.test(req.path)) {
             const fullpath = path.join(base, req.path);
@@ -22,7 +39,7 @@ function rollupMiddleware (base, format) {
                 .then(result => {
                     res.status(200)
                     .type('application/javascript')
-                    .send(result.code);
+                    .send(compress(result.code, req.path));
                 })
                 .catch(next);
             } else {
@@ -34,17 +51,24 @@ function rollupMiddleware (base, format) {
     };
 }
 
-app.use('/src', rollupMiddleware(path.join(__dirname, '../src'), 'amd'));
-app.use(rollupMiddleware(__dirname, 'iife'));
+app.use('/src', rollupMiddleware(path.join(__dirname, '../src'), 'amd', false));
+app.use('/dist', rollupMiddleware(path.join(__dirname, '../src'), 'amd', true));
+app.use(rollupMiddleware(__dirname, 'iife', false));
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-app.get('/assets.json', (req, res) => {
+app.get('/assets-v' + pkg.version + '.dev.json', (req, res) => {
     res.send({
         'discussion-frontend.react.amd': 'src/index.js?framework=react',
         'discussion-frontend.preact.amd': 'src/index.js?framework=preact',
+    });
+});
+app.get('/assets-v' + pkg.version + '.json', (req, res) => {
+    res.send({
+        'discussion-frontend.react.amd': 'dist/index.js?framework=react',
+        'discussion-frontend.preact.amd': 'dist/index.js?framework=preact',
     });
 });
 

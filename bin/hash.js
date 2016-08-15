@@ -6,6 +6,8 @@ const fs = require('fs');
 const mkdirp = require('mkdirp');
 const uglify = require('uglify-js');
 const listFiles = require('./lib/list');
+const uglifyOpts = require('../uglify.options');
+const pkg = require('../package.json');
 
 const SOURCE_PATH = path.join(__dirname, '../dist');
 const DESTINATION_PATH = path.join(__dirname, '../dist/hashed');
@@ -29,7 +31,8 @@ function writeRewritten (fullPath, destinationPath) {
         [renamedFile]: fileContent.toString()
     }, {
         fromString: true,
-        outSourceMap: renamedFile + '.map'
+        outSourceMap: renamedFile + '.map',
+        compress: uglifyOpts
     });
     fs.writeFileSync(renamedPath, minified.code);
     fs.writeFileSync(path.join(destinationPath, renamedFile + '.map'), minified.map);
@@ -39,7 +42,7 @@ function writeRewritten (fullPath, destinationPath) {
 }
 
 function writeMap (map, destinationPath) {
-    fs.writeFileSync(path.join(destinationPath, 'assets.json'), JSON.stringify(map));
+    fs.writeFileSync(path.join(destinationPath, 'assets-v' + pkg.version + '.json'), JSON.stringify(map));
 }
 
 function prepareWorkingPath (fullPath) {
