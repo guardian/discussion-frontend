@@ -13,10 +13,10 @@ const pkg = require('../package.json');
 
 const app = express();
 
-function rollupMiddleware (base, format, production) {
-    const react = production ? reactProd : reactDev;
-    const preact = production ? preactProd : preactDev;
-    const compress = production ? (code, name) => {
+function rollupMiddleware (base, format) {
+    const react = (production) => production ? reactProd : reactDev;
+    const preact = (production) => production ? preactProd : preactDev;
+    const compress = (production) => production ? (code, name) => {
         return uglify.minify({
             [name]: code
         }, {
@@ -27,8 +27,9 @@ function rollupMiddleware (base, format, production) {
 
     return function(req, res, next) {
         if (/\.js$/.test(req.path)) {
+            const production = req.query.production === 'false' ? false : true;
             const fullpath = path.join(base, req.path);
-            const plugins = req.query.framework === 'preact' ? preact : react;
+            const plugins = req.query.framework === 'preact' ? preact(production) : react(production);
 
             if (exists(fullpath)) {
                 rollup.rollup({
@@ -39,7 +40,7 @@ function rollupMiddleware (base, format, production) {
                 .then(result => {
                     res.status(200)
                     .type('application/javascript')
-                    .send(compress(result.code, req.path));
+                    .send(compress(production)(result.code, req.path));
                 })
                 .catch(next);
             } else {
@@ -51,9 +52,8 @@ function rollupMiddleware (base, format, production) {
     };
 }
 
-app.use('/src', rollupMiddleware(path.join(__dirname, '../src'), 'amd', false));
-app.use('/dist', rollupMiddleware(path.join(__dirname, '../src'), 'amd', true));
-app.use(rollupMiddleware(__dirname, 'iife', false));
+app.use('/src', rollupMiddleware(path.join(__dirname, '../src'), 'amd'));
+app.use(rollupMiddleware(__dirname, 'iife'));
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
@@ -61,14 +61,14 @@ app.get('/', (req, res) => {
 
 app.get('/assets-v' + pkg.version + '.dev.json', (req, res) => {
     res.send({
-        'discussion-frontend.react.amd': 'src/index.js?framework=react',
-        'discussion-frontend.preact.amd': 'src/index.js?framework=preact',
+        'discussion-frontend.react.amd': 'src/index.js?framework=react&production=false',
+        'discussion-frontend.preact.amd': 'src/index.js?framework=preact&production=false',
     });
 });
 app.get('/assets-v' + pkg.version + '.json', (req, res) => {
     res.send({
-        'discussion-frontend.react.amd': 'dist/index.js?framework=react',
-        'discussion-frontend.preact.amd': 'dist/index.js?framework=preact',
+        'discussion-frontend.react.amd': 'src/index.js?framework=react&production=true',
+        'discussion-frontend.preact.amd': 'src/index.js?framework=preact&production=true',
     });
 });
 
