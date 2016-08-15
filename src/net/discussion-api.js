@@ -9,6 +9,7 @@ export function create ({
         const url = join(apiHost, 'getCommentCounts' + '?short-urls=' + ids.join(','));
         return get(url).catch(ex => {
             mediator.emit('error', 'comments-count', ex);
+            throw ex;
         });
     }
 
