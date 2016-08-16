@@ -13,8 +13,9 @@ class Discussion extends React.Component {
     componentDidMount () {
         this.api.commentCount(this.props.id)
         .then(counts => {
-            this.setState({ commentsCount: counts[this.props.id] }, () => {
-                mediator.emit('comment-count', counts);
+            const value = counts[this.props.id];
+            this.setState({ commentsCount: value }, () => {
+                mediator.emit('comment-count', value);
             });
         });
     }
