@@ -15,7 +15,7 @@ const SOURCE_PATH = path.join(__dirname, '../dist');
 const DESTINATION_PATH = path.join(__dirname, '../dist/hashed');
 
 prepareWorkingPath(DESTINATION_PATH);
-const fileMap = listFiles(SOURCE_PATH)
+const fileMap = listFiles(SOURCE_PATH).filter(path => /\.js$/.test(path))
 .map(fullPath => writeRewritten(fullPath, DESTINATION_PATH))
 .reduce(function(map, rename) {
     return Object.assign(map, rename);
@@ -23,23 +23,24 @@ const fileMap = listFiles(SOURCE_PATH)
 writeMap(fileMap, DESTINATION_PATH);
 
 
-function writeRewritten (fullPath, destinationPath) {
-    const fileContent = fs.readFileSync(fullPath);
+function writeRewritten (sourceFullPath, destinationPath) {
+    const fileContent = fs.readFileSync(sourceFullPath);
     const revision = hash(fileContent);
-    const renamedPath = rename(fullPath, destinationPath, appendRevision(revision));
-    const ext = path.extname(fullPath);
+    const renamedPath = rename(sourceFullPath, destinationPath, appendRevision(revision));
+    const ext = path.extname(sourceFullPath);
     const renamedFile = path.basename(renamedPath, ext);
     const minified = uglify.minify({
         [renamedFile]: fileContent.toString()
     }, {
         fromString: true,
-        outSourceMap: renamedFile + '.map',
+        inSourceMap: sourceFullPath + '.map',
+        outSourceMap: renamedFile + ext + '.map',
         compress: uglifyOpts
     });
     fs.writeFileSync(renamedPath, minified.code);
-    fs.writeFileSync(path.join(destinationPath, renamedFile + '.map'), minified.map);
+    fs.writeFileSync(path.join(destinationPath, renamedFile + ext + '.map'), minified.map);
     return {
-        [path.basename(fullPath, ext)]: renamedFile + ext
+        [path.basename(sourceFullPath, ext)]: renamedFile + ext
     };
 }
 

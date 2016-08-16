@@ -16,14 +16,18 @@ const app = express();
 function rollupMiddleware (base, format) {
     const react = (production) => production ? reactProd : reactDev;
     const preact = (production) => production ? preactProd : preactDev;
-    const compress = (production) => production ? (code, name) => {
-        return uglify.minify({
-            [name]: code
+    const compress = (production) => production ? (bundle, name) => {
+        const minified = uglify.minify({
+            [name]: bundle.code
         }, {
             fromString: true,
+            inSourceMap: JSON.parse(bundle.map.toString()),
+            outSourceMap: name + '.map',
+            sourceMapIncludeSources: true,
             compress: uglifyOpts
-        }).code;
-    } : (code) => code;
+        });
+        return minified.code.replace(/\/\/# sourceMappingURL.*$/, inlineSourceMap(minified.map));
+    } : (bundle) => bundle.code + '\n' + inlineSourceMap(bundle.map.toString());
 
     return function(req, res, next) {
         if (/\.js$/.test(req.path)) {
@@ -36,11 +40,11 @@ function rollupMiddleware (base, format) {
                     entry: fullpath,
                     plugins: plugins
                 })
-                .then(bundle => bundle.generate({ format: format }))
+                .then(bundle => bundle.generate({ format: format, sourceMap: true }))
                 .then(result => {
                     res.status(200)
                     .type('application/javascript')
-                    .send(compress(production)(result.code, req.path));
+                    .send(compress(production)(result, req.path));
                 })
                 .catch(next);
             } else {
@@ -92,4 +96,12 @@ function exists (file) {
     } catch (ex) {
         return false;
     }
+}
+
+function base64 (string) {
+    return new Buffer(string).toString('base64');
+}
+
+function inlineSourceMap (map) {
+    return '//# sourceMappingURL=data:text/plain;base64,' + base64(map);
 }
