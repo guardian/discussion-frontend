@@ -61,12 +61,14 @@ app.get('/', (req, res) => {
 
 app.get('/assets-v' + pkg.version + '.dev.json', (req, res) => {
     res.send({
+        'riffraff.build.id': 'dev',
         'discussion-frontend.react.amd': 'src/index.js?framework=react&production=false',
         'discussion-frontend.preact.amd': 'src/index.js?framework=preact&production=false',
     });
 });
 app.get('/assets-v' + pkg.version + '.json', (req, res) => {
     res.send({
+        'riffraff.build.id': 'dev',
         'discussion-frontend.react.amd': 'src/index.js?framework=react&production=true',
         'discussion-frontend.preact.amd': 'src/index.js?framework=preact&production=true',
     });

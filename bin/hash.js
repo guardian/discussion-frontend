@@ -8,6 +8,8 @@ const uglify = require('uglify-js');
 const listFiles = require('./lib/list');
 const uglifyOpts = require('../uglify.options');
 const pkg = require('../package.json');
+process.env.ARTEFACT_PATH = path.join(__dirname, '../');
+const riffraff = require('node-riffraff-artefact');
 
 const SOURCE_PATH = path.join(__dirname, '../dist');
 const DESTINATION_PATH = path.join(__dirname, '../dist/hashed');
@@ -42,6 +44,7 @@ function writeRewritten (fullPath, destinationPath) {
 }
 
 function writeMap (map, destinationPath) {
+    map['riffraff.build.id'] = riffraff.settings.buildId;
     fs.writeFileSync(path.join(destinationPath, 'assets-v' + pkg.version + '.json'), JSON.stringify(map));
 }
 
