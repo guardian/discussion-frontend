@@ -2,8 +2,10 @@ import CommentLoader from '../src/index';
 
 const beforeLoad = performance.now();
 CommentLoader({
+    apiHost: '/api',
     discussionId: '1234',
-    element: document.getElementById('comments-container')
+    element: document.getElementById('comments-container'),
+    user: null
 })
 .then(mediator => {
     mediator.once('comment-count', () => {

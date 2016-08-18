@@ -10,6 +10,7 @@ const rollup = require('rollup');
 const uglify = require('uglify-js');
 const uglifyOpts = require('../uglify.options');
 const pkg = require('../package.json');
+const mockApi = require('./lib/mocks');
 
 const app = express();
 
@@ -78,11 +79,7 @@ app.get('/assets-v' + pkg.version + '.json', (req, res) => {
     });
 });
 
-app.get('/getCommentCounts', (req, res) => {
-    res.send(req.query['short-urls'].split(',').reduce((resp, id) => {
-        return Object.assign(resp, { [id]: Math.floor(Math.random() * 5000) });
-    }, {}));
-});
+app.use('/api', mockApi);
 
 var port = process.env.PORT || 4000;
 app.listen(port, () => {
