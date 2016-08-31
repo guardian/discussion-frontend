@@ -1,6 +1,6 @@
 import DiscussionView from '../ui/discussion-view';
 import mediator from '../utils/mediator';
-import sharedPropTypes from './proptypes';
+import sharedPropTypes from '../model/proptypes';
 
 class Discussion extends React.Component {
     constructor (props) {
@@ -45,7 +45,12 @@ class Discussion extends React.Component {
 
     render () {
         return (
-            <DiscussionView {...this.state} id={this.props.id} closed={this.props.closed} />
+            <DiscussionView
+                {...this.state}
+                id={this.props.id}
+                closed={this.props.closed}
+                profileUrl={this.props.profileUrl}
+            />
         );
     }
 }
@@ -56,6 +61,7 @@ Discussion.propTypes = {
         commentCount: React.PropTypes.func.isRequired,
         userProfile: React.PropTypes.func.isRequired
     }).isRequired,
+    profileUrl: React.PropTypes.string.isRequired,
     user: sharedPropTypes.user,
     userFromCookie: React.PropTypes.bool,
     closed: React.PropTypes.bool.isRequired

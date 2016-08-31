@@ -1,24 +1,34 @@
 import CommentCount from '../ui/comment-count';
+import Identity from '../ui/identity';
 import sharedPropTypes from '../model/proptypes';
 
 const DiscussionView = function({
-    id,
+    anonymous,
     closed,
     commentsCount,
     profile,
-    anonymous
+    profileUrl
 }) {
     return (
-        <CommentCount count={commentsCount} />
+        <div className="container__meta">
+            <CommentCount count={commentsCount} />
+            <Identity
+                anonymous={anonymous}
+                closed={closed}
+                profile={profile}
+                profileUrl={profileUrl}
+            />
+        </div>
     );
 };
 
 DiscussionView.propTypes = {
-    commentsCount: React.PropTypes.number,
-    profile: sharedPropTypes.user,
     anonymous: React.PropTypes.bool,
-    id: React.PropTypes.string.isRequired,
-    closed: React.PropTypes.bool.isRequired
+    closed: React.PropTypes.bool,
+    commentsCount: React.PropTypes.number,
+    id: React.PropTypes.string,
+    profile: sharedPropTypes.user,
+    profileUrl: React.PropTypes.string.isRequired
 };
 
 export default DiscussionView;

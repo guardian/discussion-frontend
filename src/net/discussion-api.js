@@ -13,7 +13,24 @@ export function create ({
         });
     }
 
+    function userProfile (id = 'me') {
+        const url = join(apiHost, '/profile/' + id);
+        return get(url, true)
+        .then(response => {
+            if (response.status !== 'ok') {
+                throw new Error('Invalid user profile status: ' + response.status);
+            } else {
+                return response.userProfile;
+            }
+        })
+        .catch(ex => {
+            mediator.emit('error', 'user-profile', ex);
+            throw ex;
+        });
+    }
+
     return {
-        commentCount
+        commentCount,
+        userProfile
     };
 }

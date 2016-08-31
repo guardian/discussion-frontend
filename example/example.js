@@ -1,15 +1,17 @@
 import CommentLoader from '../src/index';
 
 const loadedComponents = [];
+const allKeys = ['closed', 'anon', 'banned', 'provided'];
 controlsFromStorage();
 
 [
-    'comments-container-large',
-    'comments-container-portrait',
+    // 'comments-container-large',
+    // 'comments-container-portrait',
     'comments-container-landscape'
 ].forEach(element => {
     const props = propsFromStorage({
         apiHost: '/api',
+        profileUrl: 'https://profile.code.dev-theguardian.com',
         discussionId: '1234',
         element: document.getElementById(element)
     });
@@ -19,10 +21,27 @@ controlsFromStorage();
     });
 });
 
-function propsFromStorage (base) {
+function propsFromStorage (base, provided) {
     try {
-        const json = JSON.parse(window.localStorage.getItem('discussion-frontend-example'));
-        return Object.assign(base, json);
+        const json = provided || JSON.parse(window.localStorage.getItem('discussion-frontend-example'));
+        const user = (() => {
+            if (json.provided) return {
+                privateFields: {
+                    canPostComment: true
+                }
+            };
+            if (json.banned) return {
+                privateFields: {
+                    canPostComment: false
+                }
+            };
+            return null;
+        })();
+
+        return Object.assign({}, base, json, {
+            user: user,
+            userFromCookie: json.anon ? false : !user
+        });
     } catch (ex) {
         return base;
     }
@@ -41,9 +60,10 @@ function controlsFromStorage () {
         console.error(ex);
     }
 
-    const allKeys = ['closed'];
-
     allKeys.forEach(key => {
+        document.getElementById('anon').addEventListener('click', disable('provided', 'banned'));
+        document.getElementById('provided').addEventListener('click', disable('anon', 'banned'));
+        document.getElementById('banned').addEventListener('click', disable('anon', 'provided'));
         document.getElementById(key).addEventListener('click', saveToStorage);
     });
 
@@ -53,8 +73,15 @@ function controlsFromStorage () {
             json[key] = document.getElementById(key).checked;
         });
         loadedComponents.forEach(props => {
-            CommentLoader(Object.assign({}, props, json));
+            props.element.innerHTML = '';
+            CommentLoader(propsFromStorage(props, json));
         });
         window.localStorage.setItem('discussion-frontend-example', JSON.stringify(json));
+    }
+
+    function disable (...others) {
+        return function() {
+            others.forEach(key => document.getElementById(key).checked = false);
+        };
     }
 }
