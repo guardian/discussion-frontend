@@ -1,17 +1,60 @@
 import CommentLoader from '../src/index';
 
-const beforeLoad = performance.now();
-CommentLoader({
-    apiHost: '/api',
-    discussionId: '1234',
-    element: document.getElementById('comments-container'),
-    user: null
-})
-.then(mediator => {
-    mediator.once('comment-count', () => {
-        const scriptTiming = performance.getEntries().filter(entry => /example\.js/.test(entry.name))[0];
-        const apiTiming = performance.getEntries().filter(entry => !/example\.js/.test(entry.name))[0];
-        console.log('Loading comments took', performance.now() - beforeLoad);
-        console.log('JavaScript time', performance.now() - scriptTiming.responseEnd - apiTiming.duration);
+const loadedComponents = [];
+controlsFromStorage();
+
+[
+    'comments-container-large',
+    'comments-container-portrait',
+    'comments-container-landscape'
+].forEach(element => {
+    const props = propsFromStorage({
+        apiHost: '/api',
+        discussionId: '1234',
+        element: document.getElementById(element)
+    });
+
+    CommentLoader(props).then(() => {
+        loadedComponents.push(props);
     });
 });
+
+function propsFromStorage (base) {
+    try {
+        const json = JSON.parse(window.localStorage.getItem('discussion-frontend-example'));
+        return Object.assign(base, json);
+    } catch (ex) {
+        return base;
+    }
+}
+
+function controlsFromStorage () {
+    try {
+        const json = JSON.parse(window.localStorage.getItem('discussion-frontend-example'));
+        Object.keys(json).forEach(key => {
+            if (json[key] === true) {
+                document.getElementById(key).setAttribute('checked', '');
+            }
+        });
+    } catch (ex) {
+        // eslint-disable-next-line no-console
+        console.error(ex);
+    }
+
+    const allKeys = ['closed'];
+
+    allKeys.forEach(key => {
+        document.getElementById(key).addEventListener('click', saveToStorage);
+    });
+
+    function saveToStorage () {
+        const json = {};
+        allKeys.forEach(key => {
+            json[key] = document.getElementById(key).checked;
+        });
+        loadedComponents.forEach(props => {
+            CommentLoader(Object.assign({}, props, json));
+        });
+        window.localStorage.setItem('discussion-frontend-example', JSON.stringify(json));
+    }
+}
