@@ -29,9 +29,13 @@ The page served is `example/index.html`. You can change the framework by configu
 
 `npm start`
 
-The local server can be used by your local instance of [guardian frontend](https://github.com/guardian/frontend) by updating your `frontend.properties`.
+The local server can be used by your local instance of [guardian frontend](https://github.com/guardian/frontend) by updating your `frontend.conf`.
 
-`discussion.frontend.assetsMap=http://localhost:4000/assets-v1.0.0.json`
+```
+devOverrides {
+    discussion.frontend.assetsMap="http://localhost:4000/assets-{VERSION}.json"
+}
+```
 
 This serves the production version of discussion assets.
 
