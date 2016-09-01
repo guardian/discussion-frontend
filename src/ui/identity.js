@@ -1,4 +1,4 @@
-import sharedPropTypes from '../model/proptypes';
+import { user } from '../model/proptypes';
 
 const Identity = function({
     anonymous,
@@ -36,7 +36,7 @@ const Identity = function({
 Identity.propTypes = {
     anonymous: React.PropTypes.bool,
     closed: React.PropTypes.bool,
-    profile: sharedPropTypes.user,
+    profile: user,
     profileUrl: React.PropTypes.string.isRequired
 };
 

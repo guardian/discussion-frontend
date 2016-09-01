@@ -11,10 +11,10 @@ app.get('/getCommentCounts', (req, res) => {
 app.get('/profile/:id', (req, res) => {
     switch (req.params.id) {
         case 'me':
-            res.send(userResponse('Your Self'));
+            res.jsonp(userResponse('Your Self'));
             break;
         default:
-            res.send({
+            res.jsonp({
                 'status': 'error',
                 'statusCode': 400,
                 'message': 'You must be signed in to view this page',

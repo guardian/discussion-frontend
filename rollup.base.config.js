@@ -14,8 +14,8 @@ const base = [
     }),
     commonjs({
         namedExports: {
-            'node_modules/react/lib/ReactDOM.js': ['render'],
-            'preact-compat': ['render'],
+            'node_modules/react/lib/ReactDOM.js': ['render', 'unmountComponentAtNode'],
+            'preact-compat': ['render', 'unmountComponentAtNode'],
             'preact': ['render']
         }
     })
@@ -37,6 +37,9 @@ const production = [
     replace({
         'process.env.NODE_ENV': '\'production\'',
         'typeof process': '\'undefined\''
+    }),
+    alias({
+        '../model/proptypes': path.join(__dirname, 'src/model/proptypes-prod.js')
     }),
     babel({
         comments: false,

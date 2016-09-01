@@ -1,4 +1,5 @@
 import CommentLoader from '../src/index';
+import { unmountComponentAtNode } from 'react-dom';
 
 const loadedComponents = [];
 const allKeys = ['closed', 'anon', 'banned', 'provided'];
@@ -73,6 +74,7 @@ function controlsFromStorage () {
             json[key] = document.getElementById(key).checked;
         });
         loadedComponents.forEach(props => {
+            unmountComponentAtNode(props.element);
             props.element.innerHTML = '';
             CommentLoader(propsFromStorage(props, json));
         });

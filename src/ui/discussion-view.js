@@ -1,6 +1,6 @@
 import CommentCount from '../ui/comment-count';
 import Identity from '../ui/identity';
-import sharedPropTypes from '../model/proptypes';
+import { user } from '../model/proptypes';
 
 const DiscussionView = function({
     anonymous,
@@ -27,7 +27,7 @@ DiscussionView.propTypes = {
     closed: React.PropTypes.bool,
     commentsCount: React.PropTypes.number,
     id: React.PropTypes.string,
-    profile: sharedPropTypes.user,
+    profile: user,
     profileUrl: React.PropTypes.string.isRequired
 };
 
