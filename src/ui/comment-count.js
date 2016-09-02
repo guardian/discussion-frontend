@@ -1,10 +1,12 @@
 const CommentCount = ({ count }) => {
     if (count) {
         return (
-            <span>comments <span className="discussion__comment-count">({count})</span></span>
+            <h2 className="container__meta__title">
+                comments <span className="discussion__comment-count">({count})</span>
+            </h2>
         );
     } else {
-        return <span>comments</span>;
+        return <h2 className="container__meta__title">comments</h2>;
     }
 };
 

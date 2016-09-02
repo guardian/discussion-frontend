@@ -5,8 +5,37 @@
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <title>Discussion</title>
         <script src="example.js?framework=react&production=false" defer async></script>
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <div id="comments-container"></div>
+        <nav class="display-controls">
+            <label class="option">
+                <input id="closed" type="checkbox">
+                <span>Closed</span>
+            </label>
+            <label class="option">
+                <input id="anon" type="checkbox">
+                <span>Anonymous</span>
+            </label>
+            <label class="option">
+                <input id="provided" type="checkbox">
+                <span>User: Fabio</span>
+            </label>
+            <label class="option">
+                <input id="banned" type="checkbox">
+                <span>Banned</span>
+            </label>
+        </nav>
+        <div class="mobile-view">
+            <div class="portrait">
+                <div id="comments-container-portrait"></div>
+            </div>
+            <div class="landscape">
+                <div id="comments-container-landscape"></div>
+            </div>
+        </div>
+        <div class="large-view">
+            <div id="comments-container-large"></div>
+        </div>
     </body>
 </html>

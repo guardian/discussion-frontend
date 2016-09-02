@@ -5,3 +5,17 @@ export function getJson (path) {
         return resp.ok ? resp.json() : Promise.reject(new Error('fetch error: ' + resp.statusText));
     });
 }
+
+export function jsonp (path) {
+    return new Promise(function(resolve, reject) {
+        const jsonpCallback = 'jp_' + Math.floor((Math.random() * 100)) + new Date().getTime();
+        const jsonpPath = [path, 'callback=' + jsonpCallback].join(path.indexOf('?') === -1 ? '?' : '&');
+        window[jsonpCallback] = resolve;
+        const script = document.createElement('script');
+        script.src = jsonpPath;
+        script.onerror = function() {
+            reject(new Error('JSONP network error on ' + jsonpPath));
+        };
+        document.head.appendChild(script);
+    });
+}

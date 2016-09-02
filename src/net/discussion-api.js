@@ -1,4 +1,4 @@
-import { getJson } from '../utils/json';
+import { getJson, jsonp } from '../utils/json';
 import mediator from '../utils/mediator';
 import { join } from '../utils/url';
 
@@ -13,7 +13,24 @@ export function create ({
         });
     }
 
+    function userProfile (id = 'me') {
+        const url = join(apiHost, '/profile/' + id);
+        return jsonp(url)
+        .then(response => {
+            if (response.status !== 'ok') {
+                throw new Error('Invalid user profile status: ' + response.status);
+            } else {
+                return response.userProfile;
+            }
+        })
+        .catch(ex => {
+            mediator.emit('error', 'user-profile', ex);
+            throw ex;
+        });
+    }
+
     return {
-        commentCount
+        commentCount,
+        userProfile
     };
 }
