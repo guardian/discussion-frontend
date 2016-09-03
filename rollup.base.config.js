@@ -28,6 +28,7 @@ const base = [
         }
     }),
     nodeResolve({
+        module: false,
         jsnext: false,
         main: true,
         preferBuiltins: true
@@ -36,7 +37,7 @@ const base = [
         namedExports: {
             'node_modules/react/lib/ReactDOM.js': ['render', 'unmountComponentAtNode'],
             'preact-compat': ['render', 'unmountComponentAtNode'],
-            'preact': ['render']
+            'preact': ['render', 'h', 'options', 'cloneElement', 'Component']
         }
     })
 ];
