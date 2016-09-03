@@ -5,8 +5,28 @@ const nodeResolve = require('rollup-plugin-node-resolve');
 const replace = require('rollup-plugin-replace');
 const inject = require('rollup-plugin-inject');
 const alias = require('rollup-plugin-alias');
+const postcss = require('rollup-plugin-postcss');
+const postcssModules = require('postcss-modules');
+const precss = require('precss');
+const postcssSCSS = require('postcss-scss');
+
+const cssExportMap = {};
 
 const base = [
+    postcss({
+        plugins: [
+            precss(),
+            postcssModules({
+                getJSON (id, exportTokens) {
+                    cssExportMap[id] = exportTokens;
+                }
+            })
+        ],
+        parser: postcssSCSS,
+        getExport (id) {
+            return cssExportMap[id];
+        }
+    }),
     nodeResolve({
         jsnext: false,
         main: true,
@@ -43,7 +63,7 @@ const production = [
     }),
     babel({
         comments: false,
-        exclude: ['node_modules/**'],
+        exclude: ['node_modules/**', '**/*.css'],
         plugins: ['transform-react-remove-prop-types']
     })
 ];
@@ -53,7 +73,7 @@ const development = [
         'process.env.NODE_ENV': '\'development\''
     }),
     babel({
-        exclude: ['node_modules/**']
+        exclude: ['node_modules/**', '**/*.css']
     })
 ];
 

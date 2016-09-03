@@ -1,4 +1,5 @@
 import { user } from '../model/proptypes';
+import styleHelpers from '../ui/styles/helpers.css';
 
 const Identity = function({
     anonymous,
@@ -9,9 +10,9 @@ const Identity = function({
     if (anonymous || !profile) {
         return (
             <p className="container__meta__item">
-                <a className="u-underline" href={profileUrl + '/signin?INTCMP=DOTCOM_COMMENTS_SIGNIN'}>Sign in</a>
+                <a className={styleHelpers.underline} href={profileUrl + '/signin?INTCMP=DOTCOM_COMMENTS_SIGNIN'}>Sign in</a>
                 {' '}or{' '}
-                <a className="u-underline" href={profileUrl + '/register?INTCMP=DOTCOM_COMMENTS_REG'}>create your Guardian account</a>
+                <a className={styleHelpers.underline} href={profileUrl + '/register?INTCMP=DOTCOM_COMMENTS_REG'}>create your Guardian account</a>
                 {' '}to join the discussion.
             </p>
         );
@@ -23,7 +24,7 @@ const Identity = function({
         );
     } else if ((profile.privateFields || {}).canPostComment === false) {
         return (
-            <p className="container__meta__item d-discussion__error">
+            <p className={['container__meta__item', styleHelpers.error].join(' ')}>
                 Commenting has been disabled for this account (<a href="/community-faqs#321a">why?</a>)
             </p>
         );
