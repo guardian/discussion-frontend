@@ -1,0 +1,6 @@
+@import "styles/_vars.scss";
+
+.count {
+    font-weight: bold;
+    color: $neutral-2;
+}

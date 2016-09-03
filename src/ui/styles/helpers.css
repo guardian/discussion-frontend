@@ -1,0 +1,21 @@
+@import "_vars.scss";
+
+.underline {
+    text-decoration: none !important;
+    border-bottom: 1px solid $neutral-4;
+    transition: border-color 0.15s ease-out;
+}
+
+.underline:hover,
+.underline:focus {
+    border-color: $mix-news-default-neutral-4;
+}
+
+.underline:active {
+    border-color: $news-main-2;
+}
+
+.error {
+    margin-top: 0.5rem;
+    color: $error;
+}

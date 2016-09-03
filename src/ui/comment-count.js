@@ -1,8 +1,10 @@
+import styles from './comment-count.css';
+
 const CommentCount = ({ count }) => {
     if (count) {
         return (
             <h2 className="container__meta__title">
-                comments <span className="discussion__comment-count">({count})</span>
+                comments <span className={styles.count}>({count})</span>
             </h2>
         );
     } else {
