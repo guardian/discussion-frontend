@@ -44,7 +44,8 @@ const base = [
 
 const aliasesReact = [
     alias({
-        'react-dom': path.join(__dirname, 'node_modules/react/lib/ReactDOM.js')
+        'react-dom': path.join(__dirname, 'node_modules/react/lib/ReactDOM.js'),
+        './ReactClass': path.join(__dirname, 'bin/lib/react-class-prod.js')
     })
 ];
 
@@ -60,7 +61,10 @@ const production = [
         'typeof process': '\'undefined\''
     }),
     alias({
-        '../model/proptypes': path.join(__dirname, 'src/model/proptypes-prod.js')
+        '../model/proptypes': path.join(__dirname, 'src/model/proptypes-prod.js'),
+        './checkReactTypeSpec': path.join(__dirname, 'bin/lib/check-react-type-spec-prod.js'),
+        './ReactPropTypesSecret': path.join(__dirname, 'bin/lib/react-proptypes-secret-prod.js'),
+        './ReactPropTypes': path.join(__dirname, 'bin/lib/react-proptypes-prod.js')
     }),
     babel({
         comments: false,

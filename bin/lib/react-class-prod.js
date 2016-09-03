@@ -1,0 +1,1 @@
+exports.createClass = function() {};
