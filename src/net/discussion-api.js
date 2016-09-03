@@ -1,13 +1,16 @@
-import { getJson, jsonp } from '../utils/json';
+import * as defaultNet from '../utils/net';
 import mediator from '../utils/mediator';
 import { join } from '../utils/url';
 
 export function create ({
-    apiHost
-}, get = getJson) {
+    apiHost,
+    net
+}) {
+    const {json = defaultNet.json, jsonp = defaultNet.jsonp} = net;
+
     function commentCount (...ids) {
         const url = join(apiHost, 'getCommentCounts' + '?short-urls=' + ids.join(','));
-        return get(url).catch(ex => {
+        return json(url).catch(ex => {
             mediator.emit('error', 'comments-count', ex);
             throw ex;
         });

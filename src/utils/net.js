@@ -1,4 +1,4 @@
-export function getJson (path) {
+export function json (path) {
     return fetch(path, {
         mode: 'cors'
     }).then(resp => {
