@@ -14,8 +14,10 @@ export default function create ({
     element,
     /* Custom net module, exports `json` and `jsonp` methods */
     net = {},
-    /* Base path for profile service (signin, register) */
+    /* Base path for profile service e.g. signin, register */
     profileUrl,
+    /* Client id to add to profile links e.g. signin, register */
+    profileClientId,
     /* User information, if null, it tries to get it from discussion API */
     user,
     /* Does the user have a valid guardian user cookie? If so it'll get the profile from API */
@@ -27,6 +29,7 @@ export default function create ({
             id={discussionId}
             api={api}
             profileUrl={profileUrl}
+            profileClientId={profileClientId}
             closed={closed}
             user={user}
             userFromCookie={userFromCookie}

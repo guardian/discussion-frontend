@@ -8,7 +8,8 @@ const DiscussionView = function({
     commentsCount,
     loading,
     profile,
-    profileUrl
+    profileUrl,
+    profileClientId
 }) {
     return (
         <div className="container__meta">
@@ -19,6 +20,7 @@ const DiscussionView = function({
                 loading={loading}
                 profile={profile}
                 profileUrl={profileUrl}
+                profileClientId={profileClientId}
             />
         </div>
     );
@@ -31,7 +33,8 @@ DiscussionView.propTypes = {
     id: React.PropTypes.string,
     loading: React.PropTypes.bool.isRequired,
     profile: user,
-    profileUrl: React.PropTypes.string.isRequired
+    profileUrl: React.PropTypes.string.isRequired,
+    profileClientId: React.PropTypes.string,
 };
 
 export default DiscussionView;

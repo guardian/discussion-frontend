@@ -6,17 +6,20 @@ const Identity = function({
     closed,
     loading,
     profile,
-    profileUrl
+    profileUrl,
+    profileClientId
 }) {
     if (loading) {
         // While loading don't show anything, it conflicts with what's rendered by frontend
         return null;
     } else if (anonymous || !profile) {
+        const signIn = profileUrl + '/signin?INTCMP=DOTCOM_COMMENTS_SIGNIN' + (profileClientId ? '&clientId=' + profileClientId : '');
+        const register = profileUrl + '/register?INTCMP=DOTCOM_COMMENTS_REG' + (profileClientId ? '&clientId=' + profileClientId : '');
         return (
             <p className="container__meta__item">
-                <a className={styleHelpers.underline} href={profileUrl + '/signin?INTCMP=DOTCOM_COMMENTS_SIGNIN'}>Sign in</a>
+                <a className={styleHelpers.underline} href={signIn}>Sign in</a>
                 {' '}or{' '}
-                <a className={styleHelpers.underline} href={profileUrl + '/register?INTCMP=DOTCOM_COMMENTS_REG'}>create your Guardian account</a>
+                <a className={styleHelpers.underline} href={register}>create your Guardian account</a>
                 {' '}to join the discussion.
             </p>
         );
@@ -43,7 +46,8 @@ Identity.propTypes = {
     closed: React.PropTypes.bool,
     loading: React.PropTypes.bool.isRequired,
     profile: user,
-    profileUrl: React.PropTypes.string.isRequired
+    profileUrl: React.PropTypes.string.isRequired,
+    profileClientId: React.PropTypes.string,
 };
 
 export default Identity;

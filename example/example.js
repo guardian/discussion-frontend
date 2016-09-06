@@ -14,7 +14,8 @@ controlsFromStorage();
         apiHost: '/api',
         profileUrl: 'https://profile.code.dev-theguardian.com',
         discussionId: '1234',
-        element: document.getElementById(element)
+        element: document.getElementById(element),
+        profileClientId: 'comments'
     });
 
     CommentLoader(props).then(() => {

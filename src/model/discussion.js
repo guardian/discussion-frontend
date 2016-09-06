@@ -51,6 +51,7 @@ class Discussion extends React.Component {
                 id={this.props.id}
                 closed={this.props.closed}
                 profileUrl={this.props.profileUrl}
+                profileClientId={this.props.profileClientId}
             />
         );
     }
@@ -63,6 +64,7 @@ Discussion.propTypes = {
         userProfile: React.PropTypes.func.isRequired
     }).isRequired,
     profileUrl: React.PropTypes.string.isRequired,
+    profileClientId: React.PropTypes.string,
     user: user,
     userFromCookie: React.PropTypes.bool,
     closed: React.PropTypes.bool.isRequired
