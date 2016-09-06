@@ -4,10 +4,14 @@ import styleHelpers from '../ui/styles/helpers.css';
 const Identity = function({
     anonymous,
     closed,
+    loading,
     profile,
     profileUrl
 }) {
-    if (anonymous || !profile) {
+    if (loading) {
+        // While loading don't show anything, it conflicts with what's rendered by frontend
+        return null;
+    } else if (anonymous || !profile) {
         return (
             <p className="container__meta__item">
                 <a className={styleHelpers.underline} href={profileUrl + '/signin?INTCMP=DOTCOM_COMMENTS_SIGNIN'}>Sign in</a>
@@ -37,6 +41,7 @@ const Identity = function({
 Identity.propTypes = {
     anonymous: React.PropTypes.bool,
     closed: React.PropTypes.bool,
+    loading: React.PropTypes.bool.isRequired,
     profile: user,
     profileUrl: React.PropTypes.string.isRequired
 };

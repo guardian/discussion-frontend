@@ -6,9 +6,10 @@ class Discussion extends React.Component {
     constructor (props) {
         super(props);
         this.state = {
+            anonymous: true,
             commentsCount: 0,
-            profile: null,
-            anonymous: true
+            loading: true,
+            profile: null
         };
         this.api = this.props.api;
     }
@@ -34,12 +35,12 @@ class Discussion extends React.Component {
         const { user, userFromCookie } = this.props;
         if (userFromCookie) {
             this.api.userProfile().then((profile) => {
-                this.setState({ profile: profile, anonymous: false });
+                this.setState({ profile: profile, anonymous: false , loading: false});
             });
         } else if (user) {
-            this.setState({ profile: user, anonymous: false });
+            this.setState({ profile: user, anonymous: false, loading: false });
         } else {
-            this.setState({ anonymous: true });
+            this.setState({ anonymous: true, loading: false });
         }
     }
 
