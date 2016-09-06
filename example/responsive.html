@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Discussion</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script  defer async>
+            var json;
+            try {
+                var stored = JSON.parse(localStorage.getItem('discussion-frontend-example'));
+                json = {
+                    framework: stored.preact ? 'preact' : 'react',
+                    production: stored.prod ? 'true' : 'false'
+                }
+            } catch (ex) {
+                json = {
+                    framework: 'react',
+                    production: 'false'
+                }
+            }
+            var script = document.createElement('script');
+            script.src = 'example.js?' + [
+                'framework=' + json.framework,
+                'production=' + json.production
+            ].join('&');
+            document.head.appendChild(script);
+        </script>
+    </head>
+    <body>
+        <div id="comments-container"></div>
+    </body>
+</html>

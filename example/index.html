@@ -4,11 +4,23 @@
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <title>Discussion</title>
-        <script src="example.js?framework=react&production=false" defer async></script>
+        <script src="lib/controls.js" defer async></script>
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
         <nav class="display-controls">
+            <label class="option">
+                <input id="react" type="checkbox">
+                <span>React</span>
+            </label>
+            <label class="option">
+                <input id="preact" type="checkbox">
+                <span>Preact</span>
+            </label>
+            <label class="option">
+                <input id="prod" type="checkbox">
+                <span>Prod</span>
+            </label>
             <label class="option">
                 <input id="closed" type="checkbox">
                 <span>Closed</span>
@@ -26,16 +38,23 @@
                 <span>Banned</span>
             </label>
         </nav>
-        <div class="mobile-view">
-            <div class="portrait">
-                <div id="comments-container-portrait"></div>
+        <div class="responsive-viewer">
+            <div class="mobile-view">
+                <h1>Mobile - Portrait - 360x480</h1>
+                <div class="portrait framed">
+                    <iframe src="responsive.html"></iframe>
+                </div>
+                <h1>Tablet - Landscape - 750x480</h1>
+                <div class="tablet framed">
+                    <iframe src="responsive.html"></iframe>
+                </div>
             </div>
-            <div class="landscape">
-                <div id="comments-container-landscape"></div>
+            <div class="large-view">
+                <h1>Desktop - Large - 1000x1000</h1>
+                <div class="desktop framed">
+                    <iframe src="responsive.html"></iframe>
+                </div>
             </div>
-        </div>
-        <div class="large-view">
-            <div id="comments-container-large"></div>
         </div>
     </body>
 </html>

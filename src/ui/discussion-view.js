@@ -4,6 +4,7 @@ import { user } from '../model/proptypes';
 
 const DiscussionView = function({
     anonymous,
+    avatarImagesHost,
     closed,
     commentsCount,
     loading,
@@ -16,6 +17,7 @@ const DiscussionView = function({
             <CommentCount count={commentsCount} />
             <Identity
                 anonymous={anonymous}
+                avatarImagesHost={avatarImagesHost}
                 closed={closed}
                 loading={loading}
                 profile={profile}
@@ -28,6 +30,7 @@ const DiscussionView = function({
 
 DiscussionView.propTypes = {
     anonymous: React.PropTypes.bool,
+    avatarImagesHost: React.PropTypes.string.isRequired,
     closed: React.PropTypes.bool,
     commentsCount: React.PropTypes.number,
     id: React.PropTypes.string,

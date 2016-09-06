@@ -9,6 +9,7 @@ const postcss = require('rollup-plugin-postcss');
 const postcssModules = require('postcss-modules');
 const precss = require('precss');
 const postcssSCSS = require('postcss-scss');
+const postcssCalc = require('postcss-calc');
 
 const cssExportMap = {};
 
@@ -20,6 +21,9 @@ const base = [
                 getJSON (id, exportTokens) {
                     cssExportMap[id] = exportTokens;
                 }
+            }),
+            postcssCalc({
+                warnWhenCannotResolve: true
             })
         ],
         parser: postcssSCSS,
