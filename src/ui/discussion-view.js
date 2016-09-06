@@ -6,6 +6,7 @@ const DiscussionView = function({
     anonymous,
     closed,
     commentsCount,
+    loading,
     profile,
     profileUrl
 }) {
@@ -15,6 +16,7 @@ const DiscussionView = function({
             <Identity
                 anonymous={anonymous}
                 closed={closed}
+                loading={loading}
                 profile={profile}
                 profileUrl={profileUrl}
             />
@@ -27,6 +29,7 @@ DiscussionView.propTypes = {
     closed: React.PropTypes.bool,
     commentsCount: React.PropTypes.number,
     id: React.PropTypes.string,
+    loading: React.PropTypes.bool.isRequired,
     profile: user,
     profileUrl: React.PropTypes.string.isRequired
 };
