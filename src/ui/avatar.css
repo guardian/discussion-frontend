@@ -1,0 +1,65 @@
+@import "styles/_vars.scss";
+
+$avatarSize: 60px;
+$avatarSizeSmall: 36px;
+
+.container {
+    font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+
+@media (min-width: $desktop) {
+    .container {
+        width: calc(2 * $gs-span);
+    }
+}
+
+.author {
+    @mixin text-size-4;
+
+    overflow: hidden;
+    padding-right: calc($gs-gutter / 4);
+    font-weight: bold;
+    text-overflow: ellipsis;
+}
+
+@media (min-width: $tablet) {
+    .author {
+        display: block;
+    }
+}
+
+.label {
+    @mixin text-size-4;
+
+    color: $neutral-2;
+}
+
+.avatarWrapper {
+    margin-right: calc($gs-gutter / 5 * 2);
+    margin-top: calc($gs-baseline / 6);
+}
+
+@media (max-width: $tablet) {
+    .avatarWrapper {
+        display: none;
+    }
+}
+
+@media (max-width: $desktop) {
+    .avatarWrapper {
+        float: left;
+    }
+}
+
+.avatarImage {
+    width: $avatarSizeSmall;
+    height: $avatarSizeSmall;
+    border-radius: 1000px;
+}
+
+@media (min-width: $desktop) {
+    .avatarImage {
+        width: $avatarSize;
+        height: $avatarSize;
+    }
+}

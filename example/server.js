@@ -32,7 +32,7 @@ function rollupMiddleware (base, format) {
 
     return function(req, res, next) {
         if (/\.js$/.test(req.path)) {
-            const production = req.query.production === 'false' ? false : true;
+            const production = req.query.production === 'true';
             const fullpath = path.join(base, req.path);
             const plugins = req.query.framework === 'preact' ? preact(production) : react(production);
 
@@ -80,6 +80,7 @@ app.get('/assets-v' + pkg.version + '.json', (req, res) => {
 });
 
 app.use('/api', mockApi);
+app.use(express.static(__dirname));
 
 var port = process.env.PORT || 4000;
 app.listen(port, () => {

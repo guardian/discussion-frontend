@@ -48,6 +48,7 @@ class Discussion extends React.Component {
         return (
             <DiscussionView
                 {...this.state}
+                avatarImagesHost={this.props.avatarImagesHost}
                 id={this.props.id}
                 closed={this.props.closed}
                 profileUrl={this.props.profileUrl}
@@ -63,6 +64,7 @@ Discussion.propTypes = {
         commentCount: React.PropTypes.func.isRequired,
         userProfile: React.PropTypes.func.isRequired
     }).isRequired,
+    avatarImagesHost: React.PropTypes.string.isRequired,
     profileUrl: React.PropTypes.string.isRequired,
     profileClientId: React.PropTypes.string,
     user: user,

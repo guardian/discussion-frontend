@@ -6,6 +6,8 @@ import { create as createApi } from './net/discussion-api.js';
 export default function create ({
     /* Base host for discussion api */
     apiHost,
+    /* Base host for avatar images */
+    avatarImagesHost,
     /* Is the discussion closed for comments */
     closed,
     /* Discussion ID */
@@ -24,10 +26,12 @@ export default function create ({
     userFromCookie
 }) {
     const api = createApi({ apiHost, net });
+
     const component = (
         <Discussion
             id={discussionId}
             api={api}
+            avatarImagesHost={avatarImagesHost}
             profileUrl={profileUrl}
             profileClientId={profileClientId}
             closed={closed}

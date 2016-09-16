@@ -1,0 +1,46 @@
+body {
+    margin: 0;
+}
+
+.responsive-viewer {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.mobile-view {
+    flex: 0 0 760px;
+}
+
+.large-view {
+    flex: 1 0 1000px;
+}
+
+.portrait {
+    width: 360px;
+    height: 480px;
+}
+
+.tablet {
+    width: 750px;
+    height: 480px;
+}
+
+.desktop {
+    width: 1000px;
+    height: 1000px;
+}
+
+iframe {
+    border: 0;
+    width: 100%;
+    height: 100%;
+}
+
+h1 {
+    font-size: 120%;
+}
+
+.framed {
+    border: 1px solid black;
+    margin: auto;
+}

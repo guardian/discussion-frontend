@@ -1,8 +1,10 @@
 import { user } from '../model/proptypes';
 import styleHelpers from '../ui/styles/helpers.css';
+import Avatar from '../ui/avatar';
 
 const Identity = function({
     anonymous,
+    avatarImagesHost,
     closed,
     loading,
     profile,
@@ -36,13 +38,15 @@ const Identity = function({
             </p>
         );
     } else {
-        // Ideally the avatar goes here, but for now it's still in the comment box
-        return null;
+        return (
+            <Avatar avatarImagesHost={avatarImagesHost} userId={profile.userId} displayName={profile.displayName} />
+        );
     }
 };
 
 Identity.propTypes = {
     anonymous: React.PropTypes.bool,
+    avatarImagesHost: React.PropTypes.string.isRequired,
     closed: React.PropTypes.bool,
     loading: React.PropTypes.bool.isRequired,
     profile: user,
