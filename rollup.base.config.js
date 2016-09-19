@@ -1,10 +1,11 @@
 const path = require('path');
+const alias = require('rollup-plugin-alias');
 const babel = require('rollup-plugin-babel');
 const commonjs = require('rollup-plugin-commonjs');
-const nodeResolve = require('rollup-plugin-node-resolve');
 const replace = require('rollup-plugin-replace');
 const inject = require('rollup-plugin-inject');
-const alias = require('rollup-plugin-alias');
+const string = require('rollup-plugin-string');
+const nodeResolve = require('rollup-plugin-node-resolve');
 const postcss = require('rollup-plugin-postcss');
 const postcssModules = require('postcss-modules');
 const precss = require('precss');
@@ -30,6 +31,9 @@ const base = [
         getExport (id) {
             return cssExportMap[id];
         }
+    }),
+    string({
+        include: '**/*.svg'
     }),
     nodeResolve({
         module: false,
@@ -72,7 +76,7 @@ const production = [
     }),
     babel({
         comments: false,
-        exclude: ['node_modules/**', '**/*.css'],
+        exclude: ['node_modules/**', '**/*.css', '**/*.svg'],
         plugins: ['transform-react-remove-prop-types']
     })
 ];
@@ -82,7 +86,7 @@ const development = [
         'process.env.NODE_ENV': '\'development\''
     }),
     babel({
-        exclude: ['node_modules/**', '**/*.css']
+        exclude: ['node_modules/**', '**/*.css', '**/*.svg']
     })
 ];
 

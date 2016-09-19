@@ -1,0 +1,58 @@
+@import "../styles/_vars.scss";
+
+.bannerContainer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: $guardian-brand-dark;
+    color: #fff;
+    font-family: $font-sans;
+    z-index: 1100;
+}
+
+.promote {
+    z-index: 1;
+}
+
+.bannerMessage {
+    padding: calc($gs-baseline / 2) 0 $gs-baseline calc($gs-baseline / 2);
+}
+
+.textMessage {
+    padding-right: 3.5rem;
+}
+
+.textMessageSmall {
+    padding-right: 6rem;
+}
+
+.options {
+    float: right;
+}
+
+.options .closeButton {
+    fill: #fff;
+    padding: 0;
+}
+
+.bubble {
+    position: relative;
+    display: inline-block;
+    margin-right: $gs-baseline;
+    text-align: right;
+}
+
+.bubbleText {
+    position: relative;
+    top: calc($gs-baseline / 4);
+    font-weight: bold;
+    padding: 0 $gs-baseline;
+    color: $guardian-brand-dark;
+}
+
+.bubbleImage {
+    position: relative;
+    top: -calc($gs-baseline * 1.5);
+    z-index: -1;
+}

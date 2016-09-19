@@ -1,0 +1,47 @@
+@import "../styles/_vars.scss";
+
+$button-size: calc($base-size * 5);
+
+.button {
+    font-family: $font-sans;
+    height: $button-size;
+    padding: 0 calc($button-size / 3);
+    margin-right: calc($button-size / 3);
+    line-height: calc($button-size - 2px);
+    color: $news-main-2;
+    background-color: $news-main-1;
+    border-color: #fff;
+    display: inline-block;
+    vertical-align: top;
+    width: auto;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 1000px;
+    border-width: 1px;
+    border-style: solid;
+    box-sizing: border-box;
+}
+
+.button:hover,
+.button:focus,
+.button:active {
+    text-decoration: none;
+}
+
+.button svg {
+    width: $button-size;
+    height: $button-size;
+}
+
+.tertiary {
+    color: $neutral-1;
+    background-color: transparent;
+    border-color: $neutral-4;
+}
+
+.tertiary:hover,
+.tertiary:focus,
+.tertiary:active {
+    background-color: transparent;
+    border-color: $neutral-3-dark-10;
+}

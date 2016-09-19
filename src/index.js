@@ -14,6 +14,10 @@ export default function create ({
     discussionId,
     /* Element in which the discussion frontend is rendered */
     element,
+    /* Show a sticky banner with the comment count to engage users */
+    featureStickyBanner,
+    /* Whether the sticky banner can be dismissed */
+    featureStickyBannerDismissable,
     /* Custom net module, exports `json` and `jsonp` methods */
     net = {},
     /* Base path for profile service e.g. signin, register */
@@ -35,6 +39,8 @@ export default function create ({
             profileUrl={profileUrl}
             profileClientId={profileClientId}
             closed={closed}
+            featureStickyBanner={featureStickyBanner}
+            featureStickyBannerDismissable={featureStickyBannerDismissable}
             user={user}
             userFromCookie={userFromCookie}
         />

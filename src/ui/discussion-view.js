@@ -5,6 +5,7 @@ import { user } from '../model/proptypes';
 const DiscussionView = function({
     anonymous,
     avatarImagesHost,
+    children,
     closed,
     commentsCount,
     loading,
@@ -24,6 +25,7 @@ const DiscussionView = function({
                 profileUrl={profileUrl}
                 profileClientId={profileClientId}
             />
+            {children}
         </div>
     );
 };
@@ -31,6 +33,7 @@ const DiscussionView = function({
 DiscussionView.propTypes = {
     anonymous: React.PropTypes.bool,
     avatarImagesHost: React.PropTypes.string.isRequired,
+    children: React.PropTypes.any,
     closed: React.PropTypes.bool,
     commentsCount: React.PropTypes.number,
     id: React.PropTypes.string,
