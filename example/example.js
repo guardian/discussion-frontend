@@ -1,13 +1,17 @@
 import CommentLoader from '../src/index';
 import { unmountComponentAtNode } from 'react-dom';
+import sampleArticle from './article.html';
+import sampleArticleHead from './article.head.html';
 
-const props = propsFromStorage({
-    apiHost: '/api',
-    profileUrl: 'https://profile.code.dev-theguardian.com',
-    avatarImagesHost: 'https://avatar.guim.co.uk',
-    discussionId: '1234',
-    element: document.getElementById('comments-container'),
-    profileClientId: 'comments'
+const props = propsFromStorage(() => {
+    return {
+        apiHost: '/api',
+        profileUrl: 'https://profile.code.dev-theguardian.com',
+        avatarImagesHost: 'https://avatar.guim.co.uk',
+        discussionId: '1234',
+        element: document.getElementsByClassName('comments-container')[0],
+        profileClientId: 'comments'
+    };
 });
 
 const loadedComponents = [];
@@ -38,12 +42,25 @@ function propsFromStorage (base, provided) {
             return null;
         })();
 
-        return Object.assign({}, base, json, {
+        if (json.article) {
+            document.body.insertAdjacentHTML('afterbegin', sampleArticle);
+            document.head.insertAdjacentHTML('beforeend', sampleArticleHead);
+        }
+
+        return Object.assign({}, maybe(base), json, {
             user: user,
             userFromCookie: json.anon ? false : !user
         });
     } catch (ex) {
-        return base;
+        return maybe(base);
+    }
+}
+
+function maybe (thing) {
+    if (typeof thing === 'function') {
+        return thing();
+    } else {
+        return thing;
     }
 }
 

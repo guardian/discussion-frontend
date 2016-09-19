@@ -33,7 +33,7 @@ const base = [
         }
     }),
     string({
-        include: '**/*.svg'
+        include: ['**/*.svg', '**/*.html']
     }),
     nodeResolve({
         module: false,
@@ -76,7 +76,7 @@ const production = [
     }),
     babel({
         comments: false,
-        exclude: ['node_modules/**', '**/*.css', '**/*.svg'],
+        exclude: ['node_modules/**', '**/*.css', '**/*.svg', '**/*.html'],
         plugins: ['transform-react-remove-prop-types']
     })
 ];
@@ -86,7 +86,7 @@ const development = [
         'process.env.NODE_ENV': '\'development\''
     }),
     babel({
-        exclude: ['node_modules/**', '**/*.css', '**/*.svg']
+        exclude: ['node_modules/**', '**/*.css', '**/*.svg', '**/*.html']
     })
 ];
 

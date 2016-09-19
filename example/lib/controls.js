@@ -27,6 +27,7 @@ allKeys.forEach(key => {
     document.getElementById('react').addEventListener('click', reloadFrmaes);
     document.getElementById('preact').addEventListener('click', reloadFrmaes);
     document.getElementById('prod').addEventListener('click', reloadFrmaes);
+    document.getElementById('article').addEventListener('click', reloadFrmaes);
     document.getElementById(key).addEventListener('click', saveToStorage);
 });
 
