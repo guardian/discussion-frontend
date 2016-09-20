@@ -44,6 +44,7 @@ const base = [
     commonjs({
         namedExports: {
             'node_modules/react/lib/ReactDOM.js': ['render', 'unmountComponentAtNode'],
+            'node_modules/react/lib/ReactMount.js': ['render'],
             'preact-compat': ['render', 'unmountComponentAtNode'],
             'preact': ['render', 'h', 'options', 'cloneElement', 'Component']
         }
@@ -53,13 +54,17 @@ const base = [
 const aliasesReact = [
     alias({
         'react-dom': path.join(__dirname, 'node_modules/react/lib/ReactDOM.js'),
-        './ReactClass': path.join(__dirname, 'bin/lib/react-class-prod.js')
+        'react-mount': path.join(__dirname, 'node_modules/react/lib/ReactMount.js'),
+        './ReactClass': path.join(__dirname, 'bin/lib/react-class-prod.js'),
+        // disable animation and transition events with vendor prefixes
+        './getVendorPrefixedEventName': path.join(__dirname, 'bin/lib/react-get-vendor-prefixed-event-name-prod.js')
     })
 ];
 
 const aliasesPreact = [
     alias({
-        'react-dom': require.resolve('preact-compat')
+        'react-dom': require.resolve('preact-compat'),
+        'react-mount': require.resolve('preact-compat')
     })
 ];
 
