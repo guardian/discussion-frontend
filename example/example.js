@@ -1,5 +1,5 @@
 import CommentLoader from '../src/index';
-import { unmountComponentAtNode } from 'react-dom';
+import { unmountComponentAtNode } from 'react-mount';
 import sampleArticle from './article.html';
 import sampleArticleHead from './article.head.html';
 

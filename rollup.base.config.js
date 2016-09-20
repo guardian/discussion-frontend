@@ -44,7 +44,7 @@ const base = [
     commonjs({
         namedExports: {
             'node_modules/react/lib/ReactDOM.js': ['render', 'unmountComponentAtNode'],
-            'node_modules/react/lib/ReactMount.js': ['render'],
+            'node_modules/react/lib/ReactMount.js': ['render', 'unmountComponentAtNode'],
             'preact-compat': ['render', 'unmountComponentAtNode'],
             'preact': ['render', 'h', 'options', 'cloneElement', 'Component']
         }
@@ -53,8 +53,9 @@ const base = [
 
 const aliasesReact = [
     alias({
-        'react-dom': path.join(__dirname, 'node_modules/react/lib/ReactDOM.js'),
         'react-mount': path.join(__dirname, 'node_modules/react/lib/ReactMount.js'),
+        './ReactDefaultInjection': path.join(__dirname, 'node_modules/react/lib/ReactDefaultInjection.js'),
+        './ReactMount': path.join(__dirname, 'node_modules/react/lib/ReactMount.js'),
         './ReactClass': path.join(__dirname, 'bin/lib/react-class-prod.js'),
         // disable animation and transition events with vendor prefixes
         './getVendorPrefixedEventName': path.join(__dirname, 'bin/lib/react-get-vendor-prefixed-event-name-prod.js')
@@ -74,6 +75,7 @@ const production = [
         'typeof process': '\'undefined\''
     }),
     alias({
+        'react-dom': path.join(__dirname, 'bin/lib/react-dom-prod.js'),
         '../model/proptypes': path.join(__dirname, 'src/model/proptypes-prod.js'),
         './checkReactTypeSpec': path.join(__dirname, 'bin/lib/check-react-type-spec-prod.js'),
         './ReactPropTypesSecret': path.join(__dirname, 'bin/lib/react-proptypes-secret-prod.js'),
@@ -89,6 +91,9 @@ const production = [
 const development = [
     replace({
         'process.env.NODE_ENV': '\'development\''
+    }),
+    alias({
+        'react-dom': path.join(__dirname, 'node_modules/react/lib/ReactDOM.js')
     }),
     babel({
         exclude: ['node_modules/**', '**/*.css', '**/*.svg', '**/*.html']
