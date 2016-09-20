@@ -19,6 +19,12 @@
     padding: calc($gs-baseline / 2) 0 $gs-baseline calc($gs-baseline / 2);
 }
 
+@media (min-width: $tablet) {
+    .bannerMessage {
+        padding-left: calc($gs-baseline * 2);
+    }
+}
+
 .textMessage {
     padding-right: 3.5rem;
 }
@@ -40,19 +46,18 @@
     position: relative;
     display: inline-block;
     margin-right: $gs-baseline;
-    text-align: right;
+    text-align: center;
+}
+
+.bubble svg {
+    width: 51px;
+    height: 32px;
 }
 
 .bubbleText {
-    position: relative;
-    top: calc($gs-baseline / 4);
+    width: 51px;
+    line-height: 24px;
+    position: absolute;
     font-weight: bold;
-    padding: 0 $gs-baseline;
     color: $guardian-brand-dark;
-}
-
-.bubbleImage {
-    position: relative;
-    top: -calc($gs-baseline * 1.5);
-    z-index: -1;
 }

@@ -19,14 +19,13 @@ class StickyBanner extends React.Component {
                         <div className={styles.options}>
                             <div className={styles.bubble}>
                                 <span className={styles.bubbleText}>{commentsCount}</span>
-                                <span
-                                    className={styles.bubbleImage}
-                                    dangerouslySetInnerHTML={{__html: bubbleCentral}}
-                                />
+                                <span dangerouslySetInnerHTML={{__html: bubbleCentral}} />
                             </div>
                             {dismissable ? <CloseButton className={[styles.promote, styles.closeButton].join(' ')} /> : null}
                         </div>
-                        <div className={dismissable ? styles.textMessageSmall : styles.textMessage}>The conversation continues below the line</div>
+                        <div className={dismissable ? styles.textMessageSmall : styles.textMessage}>
+                            The conversation continues below
+                        </div>
                     </div>
                 </FauxLink>
             </div>
