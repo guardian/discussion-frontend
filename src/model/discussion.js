@@ -62,12 +62,13 @@ class Discussion extends React.Component {
             featureStickyBanner,
             featureStickyBannerDismissable,
         } = this.props;
+        const commentsCount = this.state.commentsCount;
 
         const features = [
-            this.whenLoaded(featureStickyBanner,
+            this.whenLoaded(featureStickyBanner && commentsCount >= 5,
                 <StickyBanner
                     key="banner"
-                    commentsCount={this.state.commentsCount}
+                    commentsCount={commentsCount}
                     dismissable={featureStickyBannerDismissable}
                 />
             )
