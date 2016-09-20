@@ -9,6 +9,8 @@
     color: #fff;
     font-family: $font-sans;
     z-index: 1100;
+    font-size: 90%;
+    transition: transform 500ms ease;
 }
 
 .promote {
@@ -16,7 +18,7 @@
 }
 
 .bannerMessage {
-    padding: calc($gs-baseline / 2) 0 $gs-baseline calc($gs-baseline / 2);
+    padding: calc($gs-baseline) 0 $gs-baseline calc($gs-baseline);
 }
 
 @media (min-width: $tablet) {
@@ -26,10 +28,12 @@
 }
 
 .textMessage {
+    line-height: 24px;
     padding-right: 3.5rem;
 }
 
 .textMessageSmall {
+    line-height: 26px;
     padding-right: 6rem;
 }
 
@@ -56,8 +60,16 @@
 
 .bubbleText {
     width: 51px;
-    line-height: 24px;
+    line-height: 26px;
     position: absolute;
     font-weight: bold;
     color: $guardian-brand-dark;
+}
+
+.visible {
+    transform: translateY(0);
+}
+
+.hidden {
+    transform: translateY(100%);
 }

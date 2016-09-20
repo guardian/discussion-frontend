@@ -53,6 +53,7 @@
     "uglify-js": "2.7.3"
   },
   "dependencies": {
+    "intersection-observer": "0.1.1",
     "preact": "6.0.2",
     "preact-compat": "3.1.0",
     "react": "15.3.1",
