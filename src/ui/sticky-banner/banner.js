@@ -2,6 +2,7 @@ import styles from './banner.css';
 import CloseButton from '../button/close';
 import FauxLink from '../faux-link/faux-link';
 import bubbleCentral from '../../images/bubble-central.svg';
+import { thousands } from '../../utils/format';
 
 class StickyBanner extends React.Component {
     constructor () {
@@ -18,7 +19,7 @@ class StickyBanner extends React.Component {
                     <div className={styles.bannerMessage}>
                         <div className={styles.options}>
                             <div className={styles.bubble}>
-                                <span className={styles.bubbleText}>{commentsCount}</span>
+                                <span className={styles.bubbleText}>{thousands(commentsCount)}</span>
                                 <span dangerouslySetInnerHTML={{__html: bubbleCentral}} />
                             </div>
                             {dismissable ? <CloseButton className={[styles.promote, styles.closeButton].join(' ')} /> : null}
