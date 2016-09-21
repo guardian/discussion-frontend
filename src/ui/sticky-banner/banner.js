@@ -4,6 +4,7 @@ import FauxLink from '../faux-link/faux-link';
 import bubbleCentral from '../../images/bubble-central.svg';
 import { thousands } from '../../utils/format';
 import { observeRatio } from '../../utils/intersection-observer';
+import smoothScroll from '../../utils/smooth-scroll';
 
 class StickyBanner extends React.Component {
     constructor () {
@@ -20,13 +21,23 @@ class StickyBanner extends React.Component {
             rootMargin: '-20% 0px -25%',
             threshold: 0
         };
+        const target =
+            document.getElementsByClassName('js-article__body')[0] ||
+            document.getElementsByClassName('js-liveblog-body')[0];
         this.observer = observeRatio(
-            document.getElementsByClassName('js-article__body')[0],
+            target,
             options,
             visible => {
                 this.setState({ inScrollTarget: visible });
             }
         );
+    }
+
+    scrollToComments () {
+        const anchor = document.getElementById('comments');
+        if (anchor) {
+            smoothScroll({anchor});
+        }
     }
 
     componentWillUnmount () {
@@ -43,7 +54,7 @@ class StickyBanner extends React.Component {
 
         return (
             <div className={containerClasses} data-link-name="comments sticky banner">
-                <FauxLink href="#comments">
+                <FauxLink onClick={this.scrollToComments}>
                     <div className={styles.bannerMessage}>
                         <div className={styles.options}>
                             <div className={styles.bubble}>
