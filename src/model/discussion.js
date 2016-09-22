@@ -1,5 +1,6 @@
 import DiscussionView from '../ui/discussion-view';
 import StickyBanner from '../ui/sticky-banner/banner.js';
+import StickyTopBanner from '../ui/sticky-banner/top-banner.js';
 import mediator from '../utils/mediator';
 import { user } from '../model/proptypes';
 
@@ -61,6 +62,7 @@ class Discussion extends React.Component {
             profileClientId,
             featureStickyBanner,
             featureStickyBannerDismissable,
+            featureTopBanner,
         } = this.props;
         const commentsCount = this.state.commentsCount;
 
@@ -70,6 +72,12 @@ class Discussion extends React.Component {
                     key="banner"
                     commentsCount={commentsCount}
                     dismissable={featureStickyBannerDismissable}
+                />
+            ),
+            this.whenLoaded(featureTopBanner && commentsCount >= 5,
+                <StickyTopBanner
+                    key="top-banner"
+                    commentsCount={commentsCount}
                 />
             )
         ];
@@ -98,6 +106,7 @@ Discussion.propTypes = {
     avatarImagesHost: React.PropTypes.string.isRequired,
     featureStickyBanner: React.PropTypes.bool,
     featureStickyBannerDismissable: React.PropTypes.bool,
+    featureTopBanner: React.PropTypes.bool,
     profileUrl: React.PropTypes.string.isRequired,
     profileClientId: React.PropTypes.string,
     user: user,

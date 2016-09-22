@@ -13,6 +13,21 @@
     transition: transform 500ms ease;
 }
 
+.topBannerContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    border-bottom: 2px solid $guardian-brand;
+    font-family: $font-sans;
+    z-index: 1100;
+    font-size: 90%;
+    transition: transform 500ms ease;
+    text-align: right;
+    padding: calc($gs-baseline / 2) 0;
+}
+
 .promote {
     z-index: 1;
 }
@@ -66,10 +81,31 @@
     color: $guardian-brand-dark;
 }
 
+.bubbleTextWhite {
+    color: #fff;
+}
+
 .visible {
     transform: translateY(0);
 }
 
-.hidden {
+.hiddenBelow {
     transform: translateY(100%);
+}
+
+.hiddenAbove {
+    transform: translateY(-100%);
+}
+
+.linksList {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    height: 2rem;
+    overflow-y: hidden;
+}
+
+.linksItem {
+    float: right;
+    margin-left: $gs-baseline;
 }

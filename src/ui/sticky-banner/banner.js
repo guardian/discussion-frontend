@@ -50,7 +50,7 @@ class StickyBanner extends React.Component {
         commentsCount,
         dismissable
     } = this.props) {
-        const containerClasses = [styles.bannerContainer, this.state.inScrollTarget ? styles.visible : styles.hidden].join(' ');
+        const containerClasses = [styles.bannerContainer, this.state.inScrollTarget ? styles.visible : styles.hiddenBelow].join(' ');
 
         return (
             <div className={containerClasses} data-link-name="comments sticky banner">
