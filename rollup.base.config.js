@@ -1,10 +1,11 @@
 const path = require('path');
+const alias = require('rollup-plugin-alias');
 const babel = require('rollup-plugin-babel');
 const commonjs = require('rollup-plugin-commonjs');
-const nodeResolve = require('rollup-plugin-node-resolve');
 const replace = require('rollup-plugin-replace');
 const inject = require('rollup-plugin-inject');
-const alias = require('rollup-plugin-alias');
+const string = require('rollup-plugin-string');
+const nodeResolve = require('rollup-plugin-node-resolve');
 const postcss = require('rollup-plugin-postcss');
 const postcssModules = require('postcss-modules');
 const precss = require('precss');
@@ -31,6 +32,9 @@ const base = [
             return cssExportMap[id];
         }
     }),
+    string({
+        include: ['**/*.svg', '**/*.html']
+    }),
     nodeResolve({
         module: false,
         jsnext: false,
@@ -40,6 +44,7 @@ const base = [
     commonjs({
         namedExports: {
             'node_modules/react/lib/ReactDOM.js': ['render', 'unmountComponentAtNode'],
+            'node_modules/react/lib/ReactMount.js': ['render', 'unmountComponentAtNode'],
             'preact-compat': ['render', 'unmountComponentAtNode'],
             'preact': ['render', 'h', 'options', 'cloneElement', 'Component']
         }
@@ -48,14 +53,19 @@ const base = [
 
 const aliasesReact = [
     alias({
-        'react-dom': path.join(__dirname, 'node_modules/react/lib/ReactDOM.js'),
-        './ReactClass': path.join(__dirname, 'bin/lib/react-class-prod.js')
+        'react-mount': path.join(__dirname, 'node_modules/react/lib/ReactMount.js'),
+        './ReactDefaultInjection': path.join(__dirname, 'node_modules/react/lib/ReactDefaultInjection.js'),
+        './ReactMount': path.join(__dirname, 'node_modules/react/lib/ReactMount.js'),
+        './ReactClass': path.join(__dirname, 'bin/lib/react-class-prod.js'),
+        // disable animation and transition events with vendor prefixes
+        './getVendorPrefixedEventName': path.join(__dirname, 'bin/lib/react-get-vendor-prefixed-event-name-prod.js')
     })
 ];
 
 const aliasesPreact = [
     alias({
-        'react-dom': require.resolve('preact-compat')
+        'react-dom': require.resolve('preact-compat'),
+        'react-mount': require.resolve('preact-compat')
     })
 ];
 
@@ -65,6 +75,7 @@ const production = [
         'typeof process': '\'undefined\''
     }),
     alias({
+        'react-dom': path.join(__dirname, 'bin/lib/react-dom-prod.js'),
         '../model/proptypes': path.join(__dirname, 'src/model/proptypes-prod.js'),
         './checkReactTypeSpec': path.join(__dirname, 'bin/lib/check-react-type-spec-prod.js'),
         './ReactPropTypesSecret': path.join(__dirname, 'bin/lib/react-proptypes-secret-prod.js'),
@@ -72,7 +83,7 @@ const production = [
     }),
     babel({
         comments: false,
-        exclude: ['node_modules/**', '**/*.css'],
+        exclude: ['node_modules/**', '**/*.css', '**/*.svg', '**/*.html'],
         plugins: ['transform-react-remove-prop-types']
     })
 ];
@@ -81,8 +92,11 @@ const development = [
     replace({
         'process.env.NODE_ENV': '\'development\''
     }),
+    alias({
+        'react-dom': path.join(__dirname, 'node_modules/react/lib/ReactDOM.js')
+    }),
     babel({
-        exclude: ['node_modules/**', '**/*.css']
+        exclude: ['node_modules/**', '**/*.css', '**/*.svg', '**/*.html']
     })
 ];
 

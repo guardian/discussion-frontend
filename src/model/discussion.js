@@ -1,4 +1,5 @@
 import DiscussionView from '../ui/discussion-view';
+import StickyBanner from '../ui/sticky-banner/banner.js';
 import mediator from '../utils/mediator';
 import { user } from '../model/proptypes';
 
@@ -44,16 +45,46 @@ class Discussion extends React.Component {
         }
     }
 
+    whenLoaded (condition, component) {
+        // Return the component only when the state is loaded and the condition is met
+        if (condition && this.state.loading === false) {
+            return component;
+        }
+    }
+
     render () {
+        const {
+            avatarImagesHost,
+            id,
+            closed,
+            profileUrl,
+            profileClientId,
+            featureStickyBanner,
+            featureStickyBannerDismissable,
+        } = this.props;
+        const commentsCount = this.state.commentsCount;
+
+        const features = [
+            this.whenLoaded(featureStickyBanner && commentsCount >= 5,
+                <StickyBanner
+                    key="banner"
+                    commentsCount={commentsCount}
+                    dismissable={featureStickyBannerDismissable}
+                />
+            )
+        ];
+
         return (
             <DiscussionView
                 {...this.state}
-                avatarImagesHost={this.props.avatarImagesHost}
-                id={this.props.id}
-                closed={this.props.closed}
-                profileUrl={this.props.profileUrl}
-                profileClientId={this.props.profileClientId}
-            />
+                avatarImagesHost={avatarImagesHost}
+                id={id}
+                closed={closed}
+                profileUrl={profileUrl}
+                profileClientId={profileClientId}
+            >
+                {features}
+            </DiscussionView>
         );
     }
 }
@@ -65,6 +96,8 @@ Discussion.propTypes = {
         userProfile: React.PropTypes.func.isRequired
     }).isRequired,
     avatarImagesHost: React.PropTypes.string.isRequired,
+    featureStickyBanner: React.PropTypes.bool,
+    featureStickyBannerDismissable: React.PropTypes.bool,
     profileUrl: React.PropTypes.string.isRequired,
     profileClientId: React.PropTypes.string,
     user: user,

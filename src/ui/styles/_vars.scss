@@ -1,19 +1,27 @@
+$neutral-1: #333;
 $neutral-2: #767676;
+$neutral-3: #bdbdbd;
 $neutral-4: #dcdcdc;
+$neutral-3-dark-10: #a4a4a4;
 
 $error: #d61d00;
 
+$news-main-1: #005689;
 $news-main-2: #4bc6df;
 $mix-news-default-neutral-4: #6e99b3;
+$guardian-brand-dark: #00456e;
 
 $gs-baseline: 0.75rem;
 $gs-span: 80px;
 $gs-gutter: 1.25rem;
+$base-size: calc($gs-baseline / 2);
 
 $mobile: 320px;
 $tablet: 740px;
 $desktop: 980px;
 $wide: 1300px;
+
+$font-sans: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 
 @define-mixin text-size-4 {
     font-size: 0.875rem;

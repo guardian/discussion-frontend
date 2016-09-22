@@ -1,0 +1,75 @@
+@import "../styles/_vars.scss";
+
+.bannerContainer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: $guardian-brand-dark;
+    color: #fff;
+    font-family: $font-sans;
+    z-index: 1100;
+    font-size: 90%;
+    transition: transform 500ms ease;
+}
+
+.promote {
+    z-index: 1;
+}
+
+.bannerMessage {
+    padding: calc($gs-baseline) 0 $gs-baseline calc($gs-baseline);
+}
+
+@media (min-width: $tablet) {
+    .bannerMessage {
+        padding-left: calc($gs-baseline * 2);
+    }
+}
+
+.textMessage {
+    line-height: 24px;
+    padding-right: 3.5rem;
+}
+
+.textMessageSmall {
+    line-height: 26px;
+    padding-right: 6rem;
+}
+
+.options {
+    float: right;
+}
+
+.options .closeButton {
+    fill: #fff;
+    padding: 0;
+}
+
+.bubble {
+    position: relative;
+    display: inline-block;
+    margin-right: $gs-baseline;
+    text-align: center;
+}
+
+.bubble svg {
+    width: 51px;
+    height: 32px;
+}
+
+.bubbleText {
+    width: 51px;
+    line-height: 26px;
+    position: absolute;
+    font-weight: bold;
+    color: $guardian-brand-dark;
+}
+
+.visible {
+    transform: translateY(0);
+}
+
+.hidden {
+    transform: translateY(100%);
+}

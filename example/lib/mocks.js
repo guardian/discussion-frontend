@@ -4,7 +4,7 @@ const app = express();
 
 app.get('/getCommentCounts', (req, res) => {
     res.send(req.query['short-urls'].split(',').reduce((resp, id) => {
-        return Object.assign(resp, { [id]: Math.floor(Math.random() * 5000) });
+        return Object.assign(resp, { [id]: Math.floor(Math.random() * 2000) });
     }, {}));
 });
 
