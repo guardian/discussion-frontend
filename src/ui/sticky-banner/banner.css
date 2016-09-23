@@ -28,6 +28,21 @@
     padding: calc($gs-baseline / 2) 0;
 }
 
+.badgeContainer {
+    position: fixed;
+    bottom: calc($gs-baseline * 1.5);
+    right: $gs-baseline;
+    background-color: $comment-main-2;
+    font-family: $font-sans;
+    font-size: 75%;
+    z-index: 1100;
+    width: 50px;
+    height: 50px;
+    border-radius: 1000px;
+    transition: transform 500ms ease;
+    box-shadow: 0 10px 30px 3px rgba(0, 0, 0, 0.35);
+}
+
 .promote {
     z-index: 1;
 }
@@ -73,6 +88,16 @@
     height: 32px;
 }
 
+.bubbleSmall svg {
+    width: 39px;
+    height: 32px;
+}
+
+.badgeContainer .bubble {
+    top: 0.6rem;
+    right: -0.35;
+}
+
 .bubbleText {
     width: 51px;
     line-height: 26px;
@@ -85,12 +110,21 @@
     color: #fff;
 }
 
+.bubbleTextSmall {
+    width: 39px;
+    line-height: 30px;
+}
+
 .visible {
     transform: translateY(0);
 }
 
 .hiddenBelow {
     transform: translateY(100%);
+}
+
+.hiddenBelowWithMargin {
+    transform: translateY(180%);
 }
 
 .hiddenAbove {
