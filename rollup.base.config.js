@@ -36,8 +36,8 @@ const base = [
         include: ['**/*.svg', '**/*.html']
     }),
     nodeResolve({
-        module: false,
-        jsnext: false,
+        module: true,
+        jsnext: true,
         main: true,
         preferBuiltins: true
     }),
@@ -45,8 +45,6 @@ const base = [
         namedExports: {
             'node_modules/react/lib/ReactDOM.js': ['render', 'unmountComponentAtNode'],
             'node_modules/react/lib/ReactMount.js': ['render', 'unmountComponentAtNode'],
-            'preact-compat': ['render', 'unmountComponentAtNode'],
-            'preact': ['render', 'h', 'options', 'cloneElement', 'Component']
         }
     })
 ];
@@ -63,10 +61,16 @@ const aliasesReact = [
 ];
 
 const aliasesPreact = [
-    alias({
-        'react-dom': require.resolve('preact-compat'),
-        'react-mount': require.resolve('preact-compat')
+    replace({
+        'react-dom': 'preact-compat',
+        'react-mount': 'preact-compat'
     })
+];
+
+const excludeBabel = [
+    'node_modules/react/**', 'node_modules/fbjs/**',
+    'node_modules/proptypes/**',
+    '**/*.css', '**/*.svg', '**/*.html'
 ];
 
 const production = [
@@ -79,11 +83,12 @@ const production = [
         '../model/proptypes': path.join(__dirname, 'src/model/proptypes-prod.js'),
         './checkReactTypeSpec': path.join(__dirname, 'bin/lib/check-react-type-spec-prod.js'),
         './ReactPropTypesSecret': path.join(__dirname, 'bin/lib/react-proptypes-secret-prod.js'),
-        './ReactPropTypes': path.join(__dirname, 'bin/lib/react-proptypes-prod.js')
+        './ReactPropTypes': path.join(__dirname, 'bin/lib/react-proptypes-prod.js'),
+        'proptypes': path.join(__dirname, 'bin/lib/react-proptypes-prod.js'),
     }),
     babel({
         comments: false,
-        exclude: ['node_modules/**', '**/*.css', '**/*.svg', '**/*.html'],
+        exclude: excludeBabel,
         plugins: ['transform-react-remove-prop-types']
     })
 ];
@@ -96,7 +101,7 @@ const development = [
         'react-dom': path.join(__dirname, 'node_modules/react/lib/ReactDOM.js')
     }),
     babel({
-        exclude: ['node_modules/**', '**/*.css', '**/*.svg', '**/*.html']
+        exclude: excludeBabel
     })
 ];
 
@@ -113,7 +118,9 @@ const injectPreact = [
     inject({
         exclude: ['node_modules/**'],
         modules: {
-            React: 'preact-compat'
+            'React.createElement': ['preact-compat', 'createElement'],
+            'React.Component': ['preact-compat', 'Component'],
+            'React.PropTypes': ['preact-compat', 'PropTypes'],
         }
     })
 ];
