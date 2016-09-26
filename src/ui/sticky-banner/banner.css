@@ -63,8 +63,9 @@
 }
 
 .textMessageSmall {
-    line-height: 26px;
+    line-height: 18px;
     padding-right: 6rem;
+    padding-top: 4px;
 }
 
 .options {

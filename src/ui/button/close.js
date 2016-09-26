@@ -3,7 +3,8 @@ import closeCentral from '../../images/close-central.svg';
 
 const CloseButton = function({
     label = 'Dismiss',
-    className
+    className,
+    onClick
 }) {
     const classes = [styles.button, styles.tertiary];
     if (className) {
@@ -15,13 +16,15 @@ const CloseButton = function({
             aria-label={label}
             data-link-name="close button"
             dangerouslySetInnerHTML={{__html: closeCentral}}
+            onClick={onClick}
         />
     );
 };
 
 CloseButton.propTypes = {
     className: React.PropTypes.string,
-    label: React.PropTypes.string
+    label: React.PropTypes.string,
+    onClick: React.PropTypes.func
 };
 
 export default CloseButton;
