@@ -1,6 +1,5 @@
 import styles from './banner.css';
 import CloseButton from '../button/close';
-import FauxLink from '../faux-link/faux-link';
 import bubbleCentral from '../../images/bubble-central.svg';
 import { thousands } from '../../utils/format';
 import { observeRatio } from '../../utils/intersection-observer';
@@ -14,6 +13,8 @@ class StickyBanner extends React.Component {
             // Dismiss it when it reaches the bottom of the article (not of the page).
             inScrollTarget: false
         };
+
+        this.closeBanner = this.closeBanner.bind(this);
     }
 
     componentDidMount () {
@@ -40,10 +41,20 @@ class StickyBanner extends React.Component {
         }
     }
 
-    componentWillUnmount () {
+    closeBanner (event) {
+        event.stopPropagation();
+        this.setState({ inScrollTarget: false });
+        this.disconnectScroll();
+    }
+
+    disconnectScroll () {
         if (this.observer) {
             this.observer.disconnect();
         }
+    }
+
+    componentWillUnmount () {
+        this.disconnectScroll();
     }
 
     render ({
@@ -51,23 +62,27 @@ class StickyBanner extends React.Component {
         dismissable
     } = this.props) {
         const containerClasses = [styles.bannerContainer, this.state.inScrollTarget ? styles.visible : styles.hiddenBelow].join(' ');
+        const closeButton = dismissable ?
+            <CloseButton
+                className={[styles.promote, styles.closeButton].join(' ')}
+                onClick={this.closeBanner}
+            />
+            : null;
 
         return (
             <div className={containerClasses} data-link-name="comments sticky banner">
-                <FauxLink onClick={this.scrollToComments}>
-                    <div className={styles.bannerMessage}>
-                        <div className={styles.options}>
-                            <div className={styles.bubble}>
-                                <span className={styles.bubbleText}>{thousands(commentsCount)}</span>
-                                <span dangerouslySetInnerHTML={{__html: bubbleCentral}} />
-                            </div>
-                            {dismissable ? <CloseButton className={[styles.promote, styles.closeButton].join(' ')} /> : null}
+                <div className={styles.bannerMessage} onClick={this.scrollToComments}>
+                    <div className={styles.options}>
+                        <div className={styles.bubble}>
+                            <span className={styles.bubbleText}>{thousands(commentsCount)}</span>
+                            <span dangerouslySetInnerHTML={{__html: bubbleCentral}} />
                         </div>
-                        <div className={dismissable ? styles.textMessageSmall : styles.textMessage}>
-                            The conversation continues below
-                        </div>
+                        {closeButton}
                     </div>
-                </FauxLink>
+                    <div className={dismissable ? styles.textMessageSmall : styles.textMessage}>
+                        The conversation continues below
+                    </div>
+                </div>
             </div>
         );
     }
