@@ -31,9 +31,11 @@ export default function create ({
     /* User information, if null, it tries to get it from discussion API */
     user,
     /* Does the user have a valid guardian user cookie? If so it'll get the profile from API */
-    userFromCookie
+    userFromCookie,
+    /* Dependency injection: Promise */
+    Promise = window.Promise
 }) {
-    const api = createApi({ apiHost, net });
+    const api = createApi({ apiHost, net, Promise });
 
     const component = (
         <Discussion

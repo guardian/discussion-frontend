@@ -1,11 +1,13 @@
-import * as defaultNet from '../utils/net';
+import { inject } from '../utils/net';
 import mediator from '../utils/mediator';
 import { join } from '../utils/url';
 
 export function create ({
     apiHost,
-    net
+    net,
+    Promise
 }) {
+    const defaultNet = inject(Promise);
     const {json = defaultNet.json, jsonp = defaultNet.jsonp} = net;
 
     function commentCount (...ids) {
