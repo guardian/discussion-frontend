@@ -1,6 +1,6 @@
 import styles from './banner.css';
 import CloseButton from '../button/close';
-import bubbleCentral from '../../images/bubble-central.svg';
+import bubble from '../../images/bubble-left.svg';
 import { thousands } from '../../utils/format';
 import { observeRatio } from '../../utils/intersection-observer';
 import smoothScroll from '../../utils/smooth-scroll';
@@ -64,25 +64,21 @@ class StickyBanner extends React.Component {
         const containerClasses = [styles.bannerContainer, this.state.inScrollTarget ? styles.visible : styles.hiddenBelow].join(' ');
         const closeButton = dismissable ?
             <CloseButton
-                className={[styles.promote, styles.closeButton].join(' ')}
+                className={[styles.promote, styles.bannerClose].join(' ')}
                 onClick={this.closeBanner}
             />
             : null;
 
         return (
-            <div className={containerClasses} data-link-name="comments sticky banner">
-                <div className={styles.bannerMessage} onClick={this.scrollToComments}>
-                    <div className={styles.options}>
-                        <div className={styles.bubble}>
-                            <span className={styles.bubbleText}>{thousands(commentsCount)}</span>
-                            <span dangerouslySetInnerHTML={{__html: bubbleCentral}} />
-                        </div>
-                        {closeButton}
-                    </div>
-                    <div className={dismissable ? styles.textMessageSmall : styles.textMessage}>
-                        The conversation continues below
-                    </div>
+            <div className={containerClasses} onClick={this.scrollToComments} data-link-name="comments sticky banner">
+                <div className={[styles.bannerBubble, styles.bubble].join(' ')}>
+                    <span className={styles.bubbleText}>{thousands(commentsCount)}</span>
+                    <span dangerouslySetInnerHTML={{__html: bubble}} />
                 </div>
+                <div className={dismissable ? styles.bannerText : styles.bannerTextWide}>
+                    The conversation continues below
+                </div>
+                {closeButton}
             </div>
         );
     }
