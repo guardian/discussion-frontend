@@ -1,12 +1,10 @@
 @import "../styles/_vars.scss";
 
-$button-size: calc($base-size * 5);
+$button-size: 35px;
 
 .button {
     font-family: $font-sans;
     height: $button-size;
-    padding: 0 calc($button-size / 3);
-    margin-right: calc($button-size / 3);
     line-height: calc($button-size - 2px);
     color: $news-main-2;
     background-color: $news-main-1;
@@ -43,5 +41,5 @@ $button-size: calc($base-size * 5);
 .tertiary:focus,
 .tertiary:active {
     background-color: transparent;
-    border-color: $neutral-3-dark-10;
+    border-color: $neutral-fade-3;
 }

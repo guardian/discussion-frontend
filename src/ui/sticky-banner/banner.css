@@ -5,12 +5,14 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: $guardian-brand-dark;
+    background-color: $comment-support-4-fade-95;
     color: #fff;
     font-family: $font-sans;
     z-index: 1100;
     font-size: 90%;
     transition: transform 500ms ease;
+    overflow: hidden;
+    padding: 6px 0;
 }
 
 .topBannerContainer {
@@ -18,26 +20,25 @@
     top: 0;
     left: 0;
     right: 0;
-    background-color: #fff;
-    border-bottom: 2px solid $guardian-brand;
+    background-color: $comment-support-4-fade-95;
     font-family: $font-sans;
     z-index: 1100;
     font-size: 90%;
     transition: transform 500ms ease;
     text-align: right;
-    padding: calc($gs-baseline / 2) 0;
+    padding: 6px 10px;
 }
 
 .badgeContainer {
     position: fixed;
     bottom: calc($gs-baseline * 1.5);
     right: $gs-baseline;
-    background-color: $comment-main-2;
+    background-color: $comment-support-4-fade-95;
     font-family: $font-sans;
     font-size: 75%;
     z-index: 1100;
-    width: 50px;
-    height: 50px;
+    width: 56px;
+    height: 56px;
     border-radius: 1000px;
     transition: transform 500ms ease;
     box-shadow: 0 10px 30px 3px rgba(0, 0, 0, 0.35);
@@ -47,73 +48,58 @@
     z-index: 1;
 }
 
-.bannerMessage {
-    padding: calc($gs-baseline) 0 $gs-baseline calc($gs-baseline);
+.bannerBubble {
+    position: absolute;
+    top: 6px;
+    left: 10px;
 }
 
-@media (min-width: $tablet) {
-    .bannerMessage {
-        padding-left: calc($gs-baseline * 2);
-    }
-}
-
-.textMessage {
-    line-height: 24px;
-    padding-right: 3.5rem;
-}
-
-.textMessageSmall {
+.bannerText {
     line-height: 18px;
-    padding-right: 6rem;
-    padding-top: 4px;
+    font-size: 16px;
+    padding: 0 57px 0 62px;
+    display: table-cell;
+    vertical-align: middle;
+    height: 36px;
 }
 
-.options {
-    float: right;
+.bannerTextWide {
+    line-height: 18px;
+    font-size: 16px;
+    padding: 0 10px 0 62px;
+    display: table-cell;
+    vertical-align: middle;
+    height: 36px;
 }
 
-.options .closeButton {
+.bannerClose {
+    position: absolute;
+    top: 6px;
+    right: 10px;
     fill: #fff;
     padding: 0;
 }
 
 .bubble {
-    position: relative;
-    display: inline-block;
-    margin-right: $gs-baseline;
     text-align: center;
 }
 
 .bubble svg {
-    width: 51px;
-    height: 32px;
-}
-
-.bubbleSmall svg {
-    width: 39px;
-    height: 32px;
+    width: 42px;
+    height: 35px;
 }
 
 .badgeContainer .bubble {
-    top: 0.6rem;
-    right: -0.35rem;
+    position: relative;
+    top: 0.8rem;
 }
 
 .bubbleText {
-    width: 51px;
-    line-height: 26px;
+    width: 42px;
+    line-height: 28px;
     position: absolute;
     font-weight: bold;
     color: $guardian-brand-dark;
-}
-
-.bubbleTextWhite {
-    color: #fff;
-}
-
-.bubbleTextSmall {
-    width: 39px;
-    line-height: 30px;
 }
 
 .visible {
@@ -136,11 +122,11 @@
     margin: 0;
     padding: 0;
     list-style: none;
-    height: 2rem;
+    height: 2.2rem;
     overflow-y: hidden;
 }
 
 .linksItem {
     float: right;
-    margin-left: $gs-baseline;
+    margin-left: 5px;
 }

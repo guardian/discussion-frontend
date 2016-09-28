@@ -1,5 +1,5 @@
 import styles from './banner.css';
-import bubbleLeft from '../../images/bubble-left.svg';
+import bubble from '../../images/bubble-left.svg';
 import { thousands } from '../../utils/format';
 import { observeRatio } from '../../utils/intersection-observer';
 import smoothScroll from '../../utils/smooth-scroll';
@@ -65,10 +65,10 @@ class StickyTopBanner extends React.Component {
                 <ul className={styles.linksList}>
                     <li className={styles.linksItem} onClick={this.scrollToComments}>
                         <div className={styles.bubble}>
-                            <span className={[styles.bubbleText, styles.bubbleTextWhite].join(' ')}>
+                            <span className={styles.bubbleText}>
                                 {thousands(commentsCount)}
                             </span>
-                            <span dangerouslySetInnerHTML={{__html: bubbleLeft}} />
+                            <span dangerouslySetInnerHTML={{__html: bubble}} />
                         </div>
                     </li>
                     <li
