@@ -8,7 +8,7 @@ const props = propsFromStorage(() => {
         apiHost: '/api',
         profileUrl: 'https://profile.code.dev-theguardian.com',
         avatarImagesHost: 'https://avatar.guim.co.uk',
-        discussionId: '1234',
+        discussionId: '/p/asd1234',
         element: document.getElementsByClassName('comments-container')[0],
         profileClientId: 'comments'
     };
