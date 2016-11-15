@@ -14,14 +14,6 @@ export default function create ({
     discussionId,
     /* Element in which the discussion frontend is rendered */
     element,
-    /* Show a sticky round badge with the comment count to engage users */
-    featureStickyBadge,
-    /* Show a sticky banner at the bottom of a page with the comment count to engage users */
-    featureStickyBanner,
-    /* Whether the sticky banner can be dismissed */
-    featureStickyBannerDismissable,
-    /* Show a sticky banner at the top of a page with comment count and share buttons */
-    featureTopBanner,
     /* Custom net module, exports `json` and `jsonp` methods */
     net = {},
     /* Base path for profile service e.g. signin, register */
@@ -45,10 +37,6 @@ export default function create ({
             profileUrl={profileUrl}
             profileClientId={profileClientId}
             closed={closed}
-            featureStickyBadge={featureStickyBadge}
-            featureStickyBanner={featureStickyBanner}
-            featureStickyBannerDismissable={featureStickyBannerDismissable}
-            featureTopBanner={featureTopBanner}
             user={user}
             userFromCookie={userFromCookie}
         />
