@@ -17,3 +17,7 @@ A/B test ways to promote comments with top / bottom bar and comments bubble
 # 1.4.0
 
 Include `fetch` polyfill and allow `Promise` to be injected
+
+# 1.5.0
+
+Remove A/B test to promote comments (see 1.3.0).
