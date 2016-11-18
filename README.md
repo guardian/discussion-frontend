@@ -41,6 +41,10 @@ This serves the production version of discussion assets.
 
 You can target the development version changing the path to `assets-v1.0.0.dev.json`
 
+## Mocking frontend
+
+This project includes a mock page so you don't have to run guardian frontend on you local machine. You can update the mocked page running `node bin/update-article.js`.
+
 
 # Versioning
 
