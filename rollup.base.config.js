@@ -43,17 +43,17 @@ const base = [
     }),
     commonjs({
         namedExports: {
-            'node_modules/react/lib/ReactDOM.js': ['render', 'unmountComponentAtNode'],
-            'node_modules/react/lib/ReactMount.js': ['render', 'unmountComponentAtNode'],
+            'node_modules/react-dom/lib/ReactDOM.js': ['render', 'unmountComponentAtNode'],
+            'node_modules/react-dom/lib/ReactMount.js': ['render', 'unmountComponentAtNode'],
         }
     })
 ];
 
 const aliasesReact = [
     alias({
-        'react-mount': path.join(__dirname, 'node_modules/react/lib/ReactMount.js'),
-        './ReactDefaultInjection': path.join(__dirname, 'node_modules/react/lib/ReactDefaultInjection.js'),
-        './ReactMount': path.join(__dirname, 'node_modules/react/lib/ReactMount.js'),
+        'react-mount': path.join(__dirname, 'node_modules/react-dom/lib/ReactMount.js'),
+        './ReactDefaultInjection': path.join(__dirname, 'node_modules/react-dom/lib/ReactDefaultInjection.js'),
+        './ReactMount': path.join(__dirname, 'node_modules/react-dom/lib/ReactMount.js'),
         './ReactClass': path.join(__dirname, 'bin/lib/react-class-prod.js'),
         // disable animation and transition events with vendor prefixes
         './getVendorPrefixedEventName': path.join(__dirname, 'bin/lib/react-get-vendor-prefixed-event-name-prod.js')
@@ -68,7 +68,7 @@ const aliasesPreact = [
 ];
 
 const excludeBabel = [
-    'node_modules/react/**', 'node_modules/fbjs/**',
+    'node_modules/react/**', 'node_modules/react-dom/**', 'node_modules/fbjs/**',
     'node_modules/proptypes/**',
     '**/*.css', '**/*.svg', '**/*.html'
 ];
@@ -98,7 +98,7 @@ const development = [
         'process.env.NODE_ENV': '\'development\''
     }),
     alias({
-        'react-dom': path.join(__dirname, 'node_modules/react/lib/ReactDOM.js')
+        'react-dom': path.join(__dirname, 'node_modules/react-dom/lib/ReactDOM.js')
     }),
     babel({
         exclude: excludeBabel
