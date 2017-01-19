@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "clean": "rm -rf tmp && mkdir -p tmp && rm -rf dist",
-    "compile": "rollup -c rollup.config.react.amd.js && rollup -c rollup.config.preact.amd.js && rollup -c rollup.config.preact.umd.js",
+    "compile": "rollup -c rollup.config.react.amd.js && rollup -c rollup.config.preact.amd.js && rollup -c rollup.config.preact.iife.js",
     "hash": "node bin/hash.js",
     "deploy": "node bin/riffraff.js",
     "lint": "eslint src test && stylelint 'src/**/*.css'",
