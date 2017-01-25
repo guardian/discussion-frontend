@@ -8,6 +8,7 @@
   "files": [
     "dist"
   ],
+  "main": "dist/discussion-frontend.preact.amd.js",
   "scripts": {
     "clean": "rm -rf tmp && mkdir -p tmp && rm -rf dist",
     "compile": "rollup -c rollup.config.react.amd.js && rollup -c rollup.config.preact.amd.js && rollup -c rollup.config.preact.iife.js",

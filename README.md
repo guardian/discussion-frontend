@@ -25,6 +25,10 @@ The page served is `example/index.html`. You can change the framework by configu
 * `framework` can be either `react` or `preact`
 * `production` turns minification on or off. If `production=true` the files are not minified and the development version of the chosen framework is served
 
+## As a module
+
+To include Discussion Frontend in your application, install directly from Github by adding the URL to your package.json.
+
 ## Frontend
 
 `npm start`
