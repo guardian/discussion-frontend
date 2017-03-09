@@ -1,5 +1,6 @@
 import CommentCount from '../ui/comment-count';
 import Identity from '../ui/identity';
+import CommentBox from '../ui/comment-box';
 import { user } from '../model/proptypes';
 
 const DiscussionView = function({
@@ -25,6 +26,7 @@ const DiscussionView = function({
                 profileUrl={profileUrl}
                 profileClientId={profileClientId}
             />
+            <CommentBox />
             {children}
         </div>
     );
