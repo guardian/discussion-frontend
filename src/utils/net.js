@@ -9,6 +9,19 @@ export function inject (Promise) {
         });
     }
 
+    function jsonForm (path, body) {
+      return fetch(path, {
+        mode: 'cors',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+      }).then(resp => {
+            return resp.ok ? resp.json() : Promise.reject(new Error('fetch error: ' + resp.statusText));
+        });
+    }
+
     function jsonp (path) {
         return new Promise(function(resolve, reject) {
             const jsonpCallback = 'jp_' + Math.floor((Math.random() * 100)) + new Date().getTime();
@@ -23,5 +36,5 @@ export function inject (Promise) {
         });
     }
 
-    return { json, jsonp };
+    return { json, jsonp, jsonForm };
 }

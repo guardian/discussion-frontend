@@ -11,8 +11,9 @@ const DiscussionView = function({
     commentsCount,
     loading,
     profile,
-    profileUrl,
-    profileClientId
+    profileUrl, 
+    profileClientId,
+    api
 }) {
     return (
         <div className="container__meta">
@@ -26,7 +27,7 @@ const DiscussionView = function({
                 profileUrl={profileUrl}
                 profileClientId={profileClientId}
             />
-            <CommentBox />
+            <CommentBox api={api} />
             {children}
         </div>
     );
@@ -43,6 +44,9 @@ DiscussionView.propTypes = {
     profile: user,
     profileUrl: React.PropTypes.string.isRequired,
     profileClientId: React.PropTypes.string,
+    api: React.PropTypes.shape({
+        commentScore: React.PropTypes.func.isRequired
+    }).isRequired,
 };
 
 export default DiscussionView;

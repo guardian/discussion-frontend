@@ -57,7 +57,8 @@ class Discussion extends React.Component {
             id,
             closed,
             profileUrl,
-            profileClientId
+            profileClientId,
+            api
         } = this.props;
 
         return (
@@ -68,6 +69,7 @@ class Discussion extends React.Component {
                 closed={closed}
                 profileUrl={profileUrl}
                 profileClientId={profileClientId}
+                api={api}
             >
             </DiscussionView>
         );
@@ -78,7 +80,8 @@ Discussion.propTypes = {
     id: React.PropTypes.string.isRequired,
     api: React.PropTypes.shape({
         commentCount: React.PropTypes.func.isRequired,
-        userProfile: React.PropTypes.func.isRequired
+        userProfile: React.PropTypes.func.isRequired,
+        commentScore: React.PropTypes.func.isRequired        
     }).isRequired,
     avatarImagesHost: React.PropTypes.string.isRequired,
     profileUrl: React.PropTypes.string.isRequired,

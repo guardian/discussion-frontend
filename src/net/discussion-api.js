@@ -8,7 +8,7 @@ export function create ({
     Promise
 }) {
     const defaultNet = inject(Promise);
-    const {json = defaultNet.json, jsonp = defaultNet.jsonp} = net;
+    const {json = defaultNet.json, jsonp = defaultNet.jsonp, jsonForm = defaultNet.jsonForm} = net;
 
     function commentCount (...ids) {
         const url = join(apiHost, 'getCommentCounts' + '?short-urls=' + ids.join(','));
@@ -34,8 +34,26 @@ export function create ({
         });
     }
 
+    function commentScore (body) {
+      const url = 'https://commentanalyzer.googleapis.com/v1alpha1/comments:analyze?key=' + 'API_KEY';
+      const data = {
+        comment: { text: body },
+        requestedAttributes: { TOXICITY: {}}
+      };
+
+      return jsonForm(url, data)
+      .then(response => {
+        alert(JSON.stringify(response));
+        return response;
+      })
+      .catch(ex => {
+        throw ex;
+      });
+    }
+
     return {
         commentCount,
-        userProfile
+        userProfile,
+        commentScore
     };
 }
