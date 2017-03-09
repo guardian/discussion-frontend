@@ -4,11 +4,15 @@ class CommentBox extends React.Component {
   constructor (props) {
       super(props);
       this.api = this.props.api;
+      this.state = { score: null };
       this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange () {
-    this.api.commentScore('fuck you');
+  handleChange (event) {
+    this.api.commentScore(event.target.value)
+    .then(score => {
+      this.setState({score: score});
+    });
   }
 
   render () {
@@ -16,6 +20,7 @@ class CommentBox extends React.Component {
         <div className="container__meta">
           <textarea name="comment" maxLength="5000" onChange={this.handleChange}></textarea>
           <div><button type="submit">Submit</button></div>
+          <div>SCORE IS: {this.state.score}</div>
         </div>
     );
   }

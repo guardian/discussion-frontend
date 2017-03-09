@@ -43,11 +43,8 @@ export function create ({
 
       return jsonForm(url, data)
       .then(response => {
-        alert(JSON.stringify(response));
-        return response;
-      })
-      .catch(ex => {
-        throw ex;
+        console.log(JSON.stringify(response));
+        return response.attributeScores.TOXICITY.summaryScore.value;
       });
     }
 

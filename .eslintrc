@@ -34,7 +34,8 @@
         "no-self-assign": 2,
         "id-blacklist": [2, "self"],
         "template-curly-spacing": [2, "never"],
-        "space-before-function-paren": [2, {"anonymous": "never", "named": "always"}]
+        "space-before-function-paren": [2, {"anonymous": "never", "named": "always"}],
+        "no-console": 0
     },
     "plugins": [
         "react"
