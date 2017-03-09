@@ -1,3 +1,4 @@
+import styles from './comment-box.css';
 
 class CommentBox extends React.Component {
 
@@ -5,11 +6,16 @@ class CommentBox extends React.Component {
       super(props);
       this.api = this.props.api;
       this.state = { score: null };
-      this.handleChange = this.handleChange.bind(this);
+      this.handleChange = this.debounce(this.getScore.bind(this), 200);
   }
 
-  handleChange (event) {
-    this.api.commentScore(event.target.value)
+  getScore (body) {
+    if (body === '') {
+      this.setState({score: null});
+      return;
+    }
+
+    this.api.commentScore(body)
     .then(score => {
       this.setState({score: score});
     });
@@ -18,12 +24,32 @@ class CommentBox extends React.Component {
   render () {
     return (
         <div className="container__meta">
-          <textarea name="comment" maxLength="5000" onChange={this.handleChange}></textarea>
-          <div><button type="submit">Submit</button></div>
+          <textarea className={styles.textArea} name="comment" maxLength="5000" onChange={(event) => this.handleChange(event.target.value)}></textarea>
+          <button type="submit" className={styles.button}>Post</button>
           <div>SCORE IS: {this.state.score}</div>
         </div>
     );
   }
+
+  // Returns a function, that, as long as it continues to be invoked, will not
+  // be triggered. The function will be called after it stops being called for
+  // N milliseconds. If `immediate` is passed, trigger the function on the
+  // leading edge, instead of the trailing.
+  debounce (func, wait, immediate) {
+    var timeout;
+    return function() {
+      var context = this, args = arguments;
+      var later = function() {
+        timeout = null;
+        if (!immediate) func.apply(context, args);
+      };
+      var callNow = immediate && !timeout;
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+      if (callNow) func.apply(context, args);
+    };
+  }
+
 }
 
 CommentBox.propTypes = {
