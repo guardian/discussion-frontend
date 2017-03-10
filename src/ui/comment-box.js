@@ -13,20 +13,47 @@ class CommentBox extends React.Component {
     if (body === '') {
       this.setState({score: null});
       return;
+    } else if (body != '') {
+        this.setState({score:'pending'})
     }
-
     this.api.commentScore(body)
     .then(score => {
       this.setState({score: score});
     });
   }
 
+  getMessage (score) {
+      let percent =  Math.round(score * 100);
+      let message = percent + "% similar to comments breaking our comunity guidlines";
+      return message;
+  }
+
+  getSeverity() {
+      if(this.state.score < 0.4){
+          return "severity-low";
+      } else if(0.4 < this.state.score < 0.7) {
+          return "severity-medium";
+      } else {
+          return "severity-high";
+      }
+  }
+
   render () {
+      const score = this.state.score;
+      let scoreStatus = null;
+      if(score ==null){
+        scoreStatus = null
+      }else if(score=='pending') {
+          scoreStatus = "Analysing..."
+      } else {
+          scoreStatus = this.getMessage(score);
+      }
+
     return (
         <div className="container__meta">
-          <textarea className={styles.textArea} name="comment" maxLength="5000" onChange={(event) => this.handleChange(event.target.value)}></textarea>
-          <button type="submit" className={styles.button}>Post</button>
-          <div>SCORE IS: {this.state.score}</div>
+          <textarea className={styles.textArea} name="comment" maxLength="5000" onChange={(event) => {this.handleChange(event.target.value)}}></textarea>
+          <button type="submit" className={styles['button']}>Post</button>
+          <div className={[styles[this.getSeverity()], styles["message"]].join(' ')}>{scoreStatus}</div>
         </div>
     );
   }

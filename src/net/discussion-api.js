@@ -35,7 +35,7 @@ export function create ({
     }
 
     function commentScore (body) {
-      const url = 'https://commentanalyzer.googleapis.com/v1alpha1/comments:analyze?key=' + 'API_KEY';
+      const url = 'https://commentanalyzer.googleapis.com/v1alpha1/comments:analyze?key=' + 'APIKEY';
       const data = {
         comment: { text: body },
         requestedAttributes: { TOXICITY: {}}

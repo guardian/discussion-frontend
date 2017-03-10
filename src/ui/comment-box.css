@@ -1,0 +1,35 @@
+@import "styles/_vars.scss";
+.textArea {
+    width: 100%;
+    height: 100px;
+}
+
+.severity-low {
+    color : black;
+}
+.severity-high {
+    color : red;
+}
+.message {
+    font-size: 12px;
+    font-family: $font-sans;
+}
+
+button .severity-high {
+    background-color: red: ;
+}
+
+.button {
+    float: right;
+    background-color: $news-main-1; /* Green */
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    border-radius: 62.5rem;
+    font-family: $font-sans;
+}
+.button:focus { outline-style: none; }
