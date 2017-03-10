@@ -29,9 +29,9 @@ class CommentBox extends React.Component {
   }
 
   getSeverity() {
-      if(0.4 < this.state.score && this.state.score < 0.95) {
+      if(0.4 < this.state.score && this.state.score < 0.80) {
           return "severity-medium";
-      } else if (this.state.score > 0.95){
+      } else if (this.state.score > 0.80){
           return "severity-high";
       }
   }
