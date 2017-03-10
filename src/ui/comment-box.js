@@ -6,7 +6,7 @@ class CommentBox extends React.Component {
       super(props);
       this.api = this.props.api;
       this.state = { score: null };
-      this.handleChange = this.debounce(this.getScore.bind(this), 200);
+      this.handleChange = this.debounce(this.getScore.bind(this), 500);
   }
 
   getScore (body) {
@@ -24,16 +24,14 @@ class CommentBox extends React.Component {
 
   getMessage (score) {
       let percent =  Math.round(score * 100);
-      let message = percent + "% similar to comments breaking our comunity guidlines";
+      let message = <span className={styles.messageText}>{percent}% similar to comments breaking our <a href="/community-standards">community guidlines</a></span>
       return message;
   }
 
   getSeverity() {
-      if(this.state.score < 0.4){
-          return "severity-low";
-      } else if(0.4 < this.state.score < 0.7) {
+      if(0.4 < this.state.score && this.state.score < 0.95) {
           return "severity-medium";
-      } else {
+      } else if (this.state.score > 0.95){
           return "severity-high";
       }
   }
@@ -42,18 +40,27 @@ class CommentBox extends React.Component {
       const score = this.state.score;
       let scoreStatus = null;
       if(score ==null){
-        scoreStatus = null
+        scoreStatus = <span >Please keep comments respectful and abide by the community guidlines <a href="/community-standards">community guidlines</a></span>
       }else if(score=='pending') {
-          scoreStatus = "Analysing..."
+          scoreStatus = <span className={styles.analysing}>Analysing...</span>
       } else {
           scoreStatus = this.getMessage(score);
       }
+      let message = ""
 
     return (
-        <div className="container__meta">
+        <div className={styles.container__meta}>
+          <div>
+              <button className={styles.smallButton}><b>B</b></button>
+              <button className={styles.smallButton}> i  </button>
+              <button className={styles.smallButton}> "  </button>
+              <button className={styles.smallButton}>Link</button>
+          </div>
           <textarea className={styles.textArea} name="comment" maxLength="5000" onChange={(event) => {this.handleChange(event.target.value)}}></textarea>
-          <button type="submit" className={styles['button']}>Post</button>
-          <div className={[styles[this.getSeverity()], styles["message"]].join(' ')}>{scoreStatus}</div>
+          <div className={styles.messageArea}>
+              <button type="submit" className={[styles['button'], styles[this.getSeverity()]].join(' ')}>Post</button>
+              <div className={[styles[this.getSeverity()], styles["message"]].join(' ')}>{scoreStatus}</div>
+          </div>
         </div>
     );
   }

@@ -2,26 +2,78 @@
 .textArea {
     width: 100%;
     height: 100px;
+    box-sizing: border-box;
+}
+.container__meta {
+    background-color: $neutral-5;
+    padding: 5px;
 }
 
-.severity-low {
-    color : black;
-}
-.severity-high {
-    color : red;
-}
 .message {
+    min-height: 25px;
+    margin-right: 50px;
     font-size: 12px;
     font-family: $font-sans;
+    color: $neutral-2;
+    text-align: right;
 }
 
-button .severity-high {
-    background-color: red: ;
+
+.messageText {
+    animation: fadeIn 1s;
 }
+
+@keyframes fadeIn {
+    from { opacity: 0;}
+    to { opacity: 1; }
+}
+
+span a {
+    text-decoration: none;
+}
+
+.severity-high span a {
+    text-decoration: none;
+    color : $error;
+}
+.severity-medium span a {
+    text-decoration: none;
+    color : $comment-main-2;;
+}
+
+.analysing {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.1;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.messageArea {
+    padding: 5px;
+    width: 100%;
+}
+
+
+button.severity-high {
+    background-color: $error;
+}
+button.severity-medium {
+    background-color: $comment-main-2;
+}
+
 
 .button {
     float: right;
-    background-color: $news-main-1; /* Green */
+    background-color: $news-main-1;
     border: none;
     color: white;
     padding: 5px 10px;
@@ -33,3 +85,17 @@ button .severity-high {
     font-family: $font-sans;
 }
 .button:focus { outline-style: none; }
+
+.smallButton {
+    float: left;
+    border: 1px solid $neutral-3;
+    color: $neutral-3;
+    background-color: white;
+    padding: 1px 4px;
+    margin: 1px 4px 4px 0px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    font-family: $font-sans;
+}

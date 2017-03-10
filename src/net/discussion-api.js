@@ -35,7 +35,7 @@ export function create ({
     }
 
     function commentScore (body) {
-      const url = 'https://commentanalyzer.googleapis.com/v1alpha1/comments:analyze?key=' + 'APIKEY';
+      const url = join('https://discussion.theguardian.com/discussion-api', '/score');
       const data = {
         comment: { text: body },
         requestedAttributes: { TOXICITY: {}}
@@ -44,7 +44,7 @@ export function create ({
       return jsonForm(url, data)
       .then(response => {
         console.log(JSON.stringify(response));
-        return response.attributeScores.TOXICITY.summaryScore.value;
+        return response.toxicityScore;
       });
     }
 
