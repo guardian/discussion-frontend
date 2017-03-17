@@ -1,12 +1,17 @@
 import styles from './comment-box.css';
+import LinkBox from '../ui/linkBox';
 
 class CommentBox extends React.Component {
 
   constructor (props) {
       super(props);
       this.api = this.props.api;
-      this.state = { score: null };
+      this.state = {
+        score: null,
+        linkBoxVisible : false,
+      };
       this.handleChange = this.debounce(this.getScore.bind(this), 500);
+      this.insertLink = this.insertLink.bind(this)
   }
 
   getScore (body) {
@@ -36,6 +41,19 @@ class CommentBox extends React.Component {
       }
   }
 
+  insertTextElement(element) {
+    let textBox = document.getElementsByName("comment")[0];
+    textBox.value = textBox.value + element;
+  }
+
+  insertLink(link){
+    this.setState({linkBoxVisible: (this.state.linkBoxVisible==true ? false : true)})
+    if(!link){
+      return
+    }
+    this.insertTextElement('<a href="'+link+'">'+link+'</a>')
+  }
+
   render () {
       const score = this.state.score;
       let scoreStatus = null;
@@ -51,10 +69,14 @@ class CommentBox extends React.Component {
     return (
         <div className={styles.container__meta}>
           <div>
-              <button className={styles.smallButton}><b>B</b></button>
-              <button className={styles.smallButton}> i  </button>
-              <button className={styles.smallButton}> "  </button>
-              <button className={styles.smallButton}>Link</button>
+              <button className={styles.smallButton} onClick={ () => this.insertTextElement('<b></b>')}><b>B</b></button>
+              <button className={styles.smallButton} onClick={ () => this.insertTextElement('<i></i>')}> i  </button>
+              <button className={styles.smallButton} onClick={ () => this.insertTextElement('<blockquote></blockquote>')}> &quot; </button>
+              <button className={styles.smallButton} onClick= { () => this.insertLink()}>Link</button>
+              <LinkBox
+                visible={this.state.linkBoxVisible}
+                insertLink={this.insertLink}
+                />
           </div>
           <textarea className={styles.textArea} name="comment" maxLength="5000" onChange={(event) => {this.handleChange(event.target.value)}}></textarea>
           <div className={styles.messageArea}>
