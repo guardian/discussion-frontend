@@ -1,5 +1,6 @@
 import styles from './comment-box.css';
-import LinkBox from '../ui/linkBox';
+import LinkBox from '../ui/link-box';
+import PreviewBox from '../ui/Preview-box';
 
 class CommentBox extends React.Component {
 
@@ -9,6 +10,8 @@ class CommentBox extends React.Component {
       this.state = {
         score: null,
         linkBoxVisible : false,
+        previewBoxVisible : false,
+        text: null
       };
       this.handleChange = this.debounce(this.getScore.bind(this), 500);
       this.insertLink = this.insertLink.bind(this)
@@ -54,11 +57,19 @@ class CommentBox extends React.Component {
     this.insertTextElement('<a href="'+link+'">'+link+'</a>')
   }
 
+  displayPreview () {
+    this.setState({ previewBoxVisible : !this.state.previewBoxVisible});
+  }
+
+  updateText (text) {
+    this.setState( {text : text})
+  }
+
   render () {
       const score = this.state.score;
       let scoreStatus = null;
       if(score ==null){
-        scoreStatus = <span >Please keep comments respectful and abide by the community guidlines <a href="/community-standards">community guidlines</a></span>
+        scoreStatus = <span>Please keep comments respectful and abide by the community guidlines <a href="/community-standards">community guidlines</a></span>
       }else if(score=='pending') {
           scoreStatus = <span className={styles.analysing}>Analysing...</span>
       } else {
@@ -78,11 +89,16 @@ class CommentBox extends React.Component {
                 insertLink={this.insertLink}
                 />
           </div>
-          <textarea className={styles.textArea} name="comment" maxLength="5000" onChange={(event) => {this.handleChange(event.target.value)}}></textarea>
-          <div className={styles.messageArea}>
-              <button type="submit" className={[styles['button'], styles[this.getSeverity()]].join(' ')}>Post</button>
-              <div className={[styles[this.getSeverity()], styles["message"]].join(' ')}>{scoreStatus}</div>
+          <textarea className={styles.textArea} name="comment" maxLength="5000" onChange={(event) => {this.updateText(event.target.value);this.handleChange(event.target.value)}}></textarea>
+          <div className={[styles[this.getSeverity()], styles["messageArea"]].join(" ")}>
+              <button type="submit" className={[styles['button'], styles['primaryButton']].join(' ')}>Post</button>
+              <button className={[styles["button"],styles["secondaryButton"]].join(' ')} onClick={ () => this.displayPreview() }>{this.state.previewBoxVisible ? 'Hide preview' : 'Preview'}</button>
+              <div className={[styles["message"]].join(' ')}>{scoreStatus}</div>
           </div>
+          <PreviewBox
+            visible = {this.state.previewBoxVisible}
+            text = {this.state.text}
+           />
         </div>
     );
   }
