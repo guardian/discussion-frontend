@@ -1,6 +1,7 @@
 import styles from './comment-box.css';
 import LinkBox from '../ui/link-box';
 import PreviewBox from '../ui/Preview-box';
+import RichTextBox from '../ui/rich-text-box';
 
 class CommentBox extends React.Component {
 
@@ -99,6 +100,7 @@ class CommentBox extends React.Component {
             visible = {this.state.previewBoxVisible}
             text = {this.state.text}
            />
+           <RichTextBox />
         </div>
     );
   }
