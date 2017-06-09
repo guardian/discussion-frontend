@@ -1,11 +1,11 @@
 const fs = require('fs');
+const yaml = require('js-yaml');
 const path = require('path');
 const mkdirp = require('mkdirp');
 const listFiles = require('./lib/list');
-const deploy = require('../deploy.json');
+const deploy = yaml.safeLoad(fs.readFileSync('riff-raff.yaml', 'utf8'));
 process.env.ARTEFACT_PATH = path.join(__dirname, '../');
 const riffraff = require('node-riffraff-artefact');
-
 const SOURCE_PATH = path.join(__dirname, '../dist/hashed');
 const DESTINATION_PATH = path.join(__dirname, '../tmp/riffraff');
 
@@ -38,12 +38,12 @@ function copyHashedFiles (destinationPath) {
 }
 
 function getPackage (json) {
-    return Object.keys(json.packages)
-    .filter(key => json.packages[key].type === 'aws-s3')[0];
+    return Object.keys(json)
+    .filter(key => json[key].type === 'aws-s3')[0];
 }
 
 function copyDeployJson (destinationPath, json) {
-    fs.writeFileSync(path.join(destinationPath, 'deploy.json'), JSON.stringify(json));
+    fs.writeFileSync(path.join(destinationPath, 'riff-raff.yaml'), JSON.stringify(json));
 }
 
 function uploadToRiffRaff () {

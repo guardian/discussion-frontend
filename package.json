@@ -54,11 +54,13 @@
   },
   "dependencies": {
     "intersection-observer": "0.1.1",
+    "js-yaml": "^3.8.4",
     "preact": "6.0.2",
     "preact-compat": "3.4.2",
     "react": "15.3.2",
     "react-dom": "15.3.2",
     "tiny-emitter": "1.1.0",
-    "whatwg-fetch": "1.0.0"
+    "whatwg-fetch": "1.0.0",
+    "yamljs": "^0.2.10"
   }
 }
