@@ -13,7 +13,7 @@ mkdirp.sync(DESTINATION_PATH);
 const pack = getPackage(deploy);
 
 if (!pack) {
-    console.log("im testing teamcity ")
+    console.log("im testing teamcity")
     process.exit(2);
 }
 copyHashedFiles(DESTINATION_PATH + '/packages/' + pack);
