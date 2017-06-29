@@ -12,7 +12,7 @@
     "clean": "rm -rf tmp && mkdir -p tmp && rm -rf dist",
     "compile": "rollup -c rollup.config.react.amd.js && rollup -c rollup.config.preact.amd.js && rollup -c rollup.config.preact.iife.js",
     "hash": "node bin/hash.js",
-    "deploy": "node --harmony bin/riffraff.js",
+    "deploy": "node bin/riffraff.js",
     "lint": "eslint src test && stylelint 'src/**/*.css'",
     "example": "node example/server.js",
     "prebuild": "npm run clean",
