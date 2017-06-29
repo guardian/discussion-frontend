@@ -12,7 +12,7 @@ const deploy = yaml.safeLoad(fs.readFileSync('riff-raff.yaml', 'utf8'));
 
 mkdirp.sync(DESTINATION_PATH);
 
-const copyHashedFiles = (destinationPath) => {
+function copyHashedFiles (destinationPath) {
     mkdirp.sync(destinationPath);
 
     listFiles(SOURCE_PATH)
@@ -21,30 +21,19 @@ const copyHashedFiles = (destinationPath) => {
         .pipe(fs.createWriteStream(path.join(destinationPath, path.basename(file))));
     });
 
-};
+}
 
-const getPackage = (yaml) => {
-
-    return Object.keys(yaml).filter(key => yaml[key].type === 'aws-s3')[0];
-};
-
-const copyRiffRaffYaml = (destinationPath, yaml) => {
+function copyRiffRaffYaml (destinationPath, yaml) {
     fs.writeFileSync(path.join(destinationPath, 'riff-raff.yaml'), JSON.stringify(yaml));
-};
+}
 
-const uploadToRiffRaff = () => {
+function uploadToRiffRaff () {
     riffraff.settings.leadDir = path.join(__dirname, '../tmp/riffraff');
 
     return riffraff.s3FilesUpload();
-};
-
-const pack = getPackage(deploy);
-
-if (!pack) {
-    process.exit(2);
 }
 
-copyHashedFiles(DESTINATION_PATH + '/packages/' + pack);
+copyHashedFiles(DESTINATION_PATH + '/packages/static');
 copyRiffRaffYaml(DESTINATION_PATH, deploy);
 uploadToRiffRaff().then(function() {
     // eslint-disable-next-line no-console
