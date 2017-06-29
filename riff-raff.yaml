@@ -10,15 +10,12 @@ deployments:
         value: public, max-age=315360000
       - pattern: .*
         value: public, max-age=60
-      publicReadAcl: true
-      prefixPackage: true
       mimeTypes:
         js: application/javascript
         json: application/json
         map: text/plain
       prefixStack: false
       bucket: com-gu-discussion-frontend
-      prefixStage: true
     type: aws-s3
 regions:
 - eu-west-1

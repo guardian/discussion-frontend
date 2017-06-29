@@ -8,7 +8,7 @@ const riffraff = require('node-riffraff-artefact');
 
 const SOURCE_PATH = path.join(__dirname, '../dist/hashed');
 const DESTINATION_PATH = path.join(__dirname, '../tmp/riffraff');
-const deploy = yaml.safeLoad(fs.readFileSync('riff-raff.yaml', 'utf8'));
+const riffRaff = yaml.safeLoad(fs.readFileSync('riff-raff.yaml', 'utf8'));
 
 mkdirp.sync(DESTINATION_PATH);
 
@@ -23,8 +23,10 @@ function copyHashedFiles (destinationPath) {
 
 }
 
-function copyRiffRaffYaml (destinationPath, yaml) {
-    fs.writeFileSync(path.join(destinationPath, 'riff-raff.yaml'), JSON.stringify(yaml));
+function copyRiffRaffYaml (destinationPath, rr) {
+
+    const rrFile = yaml.safeDump(rr);
+    fs.writeFileSync(path.join(destinationPath, 'riff-raff.yaml'), rrFile);
 }
 
 function uploadToRiffRaff () {
@@ -33,8 +35,8 @@ function uploadToRiffRaff () {
     return riffraff.s3FilesUpload();
 }
 
-copyHashedFiles(DESTINATION_PATH + '/packages/static');
-copyRiffRaffYaml(DESTINATION_PATH, deploy);
+copyHashedFiles(DESTINATION_PATH + '/static');
+copyRiffRaffYaml(DESTINATION_PATH, riffRaff);
 uploadToRiffRaff().then(function() {
     // eslint-disable-next-line no-console
     console.log('Upload done');
