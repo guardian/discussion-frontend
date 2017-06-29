@@ -12,7 +12,7 @@ const riffRaff = yaml.safeLoad(fs.readFileSync('riff-raff.yaml', 'utf8'));
 
 mkdirp.sync(DESTINATION_PATH);
 
-function copyHashedFiles (destinationPath) {
+const copyHashedFiles = (destinationPath) => {
     mkdirp.sync(destinationPath);
 
     listFiles(SOURCE_PATH)
@@ -21,19 +21,19 @@ function copyHashedFiles (destinationPath) {
         .pipe(fs.createWriteStream(path.join(destinationPath, path.basename(file))));
     });
 
-}
+};
 
-function copyRiffRaffYaml (destinationPath, rr) {
+const copyRiffRaffYaml = (destinationPath, rr) => {
 
     const rrFile = yaml.safeDump(rr);
     fs.writeFileSync(path.join(destinationPath, 'riff-raff.yaml'), rrFile);
-}
+};
 
-function uploadToRiffRaff () {
+const uploadToRiffRaff = () => {
     riffraff.settings.leadDir = path.join(__dirname, '../tmp/riffraff');
 
     return riffraff.s3FilesUpload();
-}
+};
 
 copyHashedFiles(DESTINATION_PATH + '/static');
 copyRiffRaffYaml(DESTINATION_PATH, riffRaff);
