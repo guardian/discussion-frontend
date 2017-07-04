@@ -1,0 +1,21 @@
+stacks:
+- discussion
+deployments:
+  static:
+    parameters:
+      cacheControl:
+      - pattern: .*\.js$
+        value: public, max-age=315360000
+      - pattern: .*\.map$
+        value: public, max-age=315360000
+      - pattern: .*
+        value: public, max-age=60
+      mimeTypes:
+        js: application/javascript
+        json: application/json
+        map: text/plain
+      prefixStack: false
+      bucket: com-gu-discussion-frontend
+    type: aws-s3
+regions:
+- eu-west-1
