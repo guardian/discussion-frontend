@@ -37,7 +37,7 @@ const uploadToRiffRaff = () => {
 
 copyHashedFiles(DESTINATION_PATH + '/static');
 copyRiffRaffYaml(DESTINATION_PATH, riffRaff);
-uploadToRiffRaff().then(function() {
+uploadToRiffRaff().then(() => {
     // eslint-disable-next-line no-console
     console.log('Upload done');
 }).catch((error) => {
