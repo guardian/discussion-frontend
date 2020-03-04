@@ -4,11 +4,11 @@ const CommentCount = ({ count }) => {
     if (count) {
         return (
             <h2 className="container__meta__title">
-                comments <span className={styles.count}>({count})</span>
+                Comments <span className={styles.count}>({count})</span>
             </h2>
         );
     } else {
-        return <h2 className="container__meta__title">comments</h2>;
+        return <h2 className="container__meta__title">Comments</h2>;
     }
 };
 
