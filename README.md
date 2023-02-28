@@ -1,4 +1,4 @@
-> Note
+> **Note**
 > This project has been archived, and most of it's goals have bee achieved via https://github.com/guardian/discussion-rendering
 
 Standalone UI for Guardian comments
