@@ -19,7 +19,7 @@ export function create ({
     }
 
     function userProfile (id = 'me') {
-        const url = join(apiHost, '/profile/' + id);
+        const url = join(apiHost, '/profile/' + id + '?strict_sanctions_check=false');
         return jsonp(url)
         .then(response => {
             if (response.status !== 'ok') {
